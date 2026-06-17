@@ -1,0 +1,39 @@
+name: NEWSPACE Daily Update
+
+on:
+  # Runs every day at 1:30 AM UTC = 7:00 AM IST
+  schedule:
+    - cron: '30 1 * * *'
+
+  # Also lets you trigger it manually from GitHub anytime
+  workflow_dispatch:
+
+jobs:
+  update-site:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out your repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Step 3: Run your data updater script
+      - name: Fetch live data and update site
+        env:
+          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+        run: python scripts/update_data.py
+
+      # Step 4: Commit and push the updated index.html back to GitHub
+      - name: Commit updated site
+        run: |
+          git config user.name "NEWSPACE Bot"
+          git config user.email "bot@newspace.app"
+          git add index.html
+          git diff --staged --quiet || git commit -m "Auto-update: $(date +'%d %b %Y %H:%M IST')"
+          git push
