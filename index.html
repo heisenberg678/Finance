@@ -272,17 +272,25 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
 <!-- DASHBOARD -->
 <div id="page-dashboard" class="page active">
   <div class="section">
-    <!-- BULL BEAR HERO -->
-    <div style="display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#0f172a,#1e3a5f);border-radius:16px;padding:1.5rem 2rem;margin-bottom:1.5rem;overflow:hidden;position:relative;">
-      <!-- Bull SVG left -->
-      <div style="font-size:72px;line-height:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));user-select:none;">🐂</div>
-      <!-- Center text -->
-      <div style="text-align:center;flex:1;padding:0 1rem">
-        <div style="font-family:'Fraunces',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:800;color:#fff;letter-spacing:-0.5px;line-height:1.15;margin-bottom:6px;">Markets Never Sleep.<br><span style="color:#60a5fa">Stay Ahead.</span></div>
-        <div class="dash-date" id="dash-date" style="color:rgba(255,255,255,0.5);margin:0;font-size:12px;"></div>
+    <!-- HERO BANNER -->
+    <div style="background:linear-gradient(135deg,#0f172a 0%,#1a2d5a 100%);border-radius:16px;padding:2.25rem 2.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden;">
+      <!-- Subtle grid lines decoration -->
+      <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;"></div>
+      <!-- Glowing orb decoration -->
+      <div style="position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(99,102,241,0.15) 0%,transparent 70%);pointer-events:none;"></div>
+      <div style="position:relative;z-index:1;">
+        <!-- Live badge -->
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:600;color:#94a3b8;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:1.25rem;">
+          <span style="width:5px;height:5px;border-radius:50%;background:#4ade80;display:inline-block;animation:blink 1.8s infinite;"></span>
+          Live · Auto-updated daily at 7AM IST
+        </div>
+        <!-- Main tagline -->
+        <div style="font-family:'Fraunces',serif;font-size:clamp(1.5rem,4vw,2.4rem);font-weight:800;color:#f8fafc;letter-spacing:-0.5px;line-height:1.2;margin-bottom:1rem;">Every News<br><span style="color:#818cf8;">Simplified &amp; Summarized.</span></div>
+        <!-- Quote -->
+        <div style="font-size:13px;color:rgba(255,255,255,0.4);font-style:italic;line-height:1.6;max-width:480px;border-left:2px solid rgba(129,140,248,0.4);padding-left:12px;margin-bottom:1.25rem;">"An investment in knowledge pays the best interest." — Benjamin Franklin</div>
+        <!-- Date -->
+        <div id="dash-date" style="font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.3px;"></div>
       </div>
-      <!-- Bear SVG right -->
-      <div style="font-size:72px;line-height:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));user-select:none;">🐻</div>
     </div>
 
     <!-- AUTO:GIFT_START --><div class="gift-card">
@@ -344,21 +352,23 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
         <h2>Market Mood Today</h2>
       </div>
     </div>
-    <!-- BULL VS BEAR BANNER -->
+    <!-- MARKET SENTIMENT CARDS -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem;">
-      <div style="background:linear-gradient(135deg,#052e16,#14532d);border-radius:var(--radius);padding:1.1rem 1.25rem;display:flex;align-items:center;gap:12px;">
-        <span style="font-size:42px;line-height:1">🐂</span>
-        <div>
-          <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:#4ade80;margin-bottom:2px">Bull Market</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.5">Prices rising · Optimism high · Buy the dip mentality · FIIs flowing in</div>
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--radius);padding:1.1rem 1.25rem;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#16a34a;flex-shrink:0;"></div>
+          <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:#14532d;">Bull Market</div>
+          <div style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:#16a34a;background:#dcfce7;padding:2px 7px;border-radius:3px;">RISING</div>
         </div>
+        <div style="font-size:12px;color:#166534;line-height:1.6;">Prices rising · Investor optimism high · FIIs buying · Economic expansion phase</div>
       </div>
-      <div style="background:linear-gradient(135deg,#450a0a,#7f1d1d);border-radius:var(--radius);padding:1.1rem 1.25rem;display:flex;align-items:center;gap:12px;">
-        <span style="font-size:42px;line-height:1">🐻</span>
-        <div>
-          <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:#f87171;margin-bottom:2px">Bear Market</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.5">Prices falling · Fear dominates · Sell-off mode · FIIs pulling out</div>
+      <div style="background:#fff5f5;border:1px solid #fecaca;border-radius:var(--radius);padding:1.1rem 1.25rem;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#dc2626;flex-shrink:0;"></div>
+          <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:#7f1d1d;">Bear Market</div>
+          <div style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:#dc2626;background:#fee2e2;padding:2px 7px;border-radius:3px;">FALLING</div>
         </div>
+        <div style="font-size:12px;color:#991b1b;line-height:1.6;">Prices falling · Fear dominates · FIIs selling · Economic contraction phase</div>
       </div>
     </div>
     <div class="mood-grid">
@@ -420,23 +430,41 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
         <h2>Market Cycle — Where India Stands</h2>
       </div>
     </div>
-    <!-- CYCLE BULL BEAR VISUAL -->
-    <div style="display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
-      <div style="flex:1;padding:1rem 1.25rem;background:linear-gradient(135deg,#f0fdf4,#dcfce7);text-align:center;border-right:1px solid var(--border)">
-        <div style="font-size:48px;line-height:1;margin-bottom:6px">🐂</div>
-        <div style="font-family:'Fraunces',serif;font-size:14px;font-weight:700;color:#15803d">Bull Phase</div>
-        <div style="font-size:11px;color:#166534;margin-top:3px">Expansion → Peak</div>
-        <div style="font-size:11px;color:#166534">Buy cyclicals, growth stocks</div>
+    <!-- MARKET CYCLE INDICATOR -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.25rem;">
+      <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink4);margin-bottom:12px;">Market Cycle Spectrum</div>
+      <!-- Progress bar style cycle indicator -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;margin-bottom:10px;">
+        <div style="text-align:center;">
+          <div style="height:6px;background:#ede9fe;border-radius:3px 0 0 3px;margin-bottom:5px;"></div>
+          <div style="font-size:10px;font-weight:600;color:#6d28d9;">Trough</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="height:6px;background:#dcfce7;margin-bottom:5px;"></div>
+          <div style="font-size:10px;font-weight:600;color:#15803d;">Expansion</div>
+        </div>
+        <div style="text-align:center;position:relative;">
+          <div style="height:6px;background:#fef08a;margin-bottom:5px;position:relative;">
+            <div style="position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:14px;height:14px;background:#2563eb;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 3px rgba(37,99,235,0.2);"></div>
+          </div>
+          <div style="font-size:10px;font-weight:700;color:#2563eb;">Peak ← India</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="height:6px;background:#fee2e2;border-radius:0 3px 3px 0;margin-bottom:5px;"></div>
+          <div style="font-size:10px;font-weight:600;color:#b91c1c;">Contraction</div>
+        </div>
       </div>
-      <div style="padding:1rem;text-align:center;flex-shrink:0">
-        <div style="font-size:22px">⟷</div>
-        <div style="font-size:10px;font-weight:600;color:var(--ink4);letter-spacing:.5px;text-transform:uppercase;margin-top:3px">Market<br>Cycle</div>
-      </div>
-      <div style="flex:1;padding:1rem 1.25rem;background:linear-gradient(135deg,#fff5f5,#fee2e2);text-align:center;border-left:1px solid var(--border)">
-        <div style="font-size:48px;line-height:1;margin-bottom:6px">🐻</div>
-        <div style="font-family:'Fraunces',serif;font-size:14px;font-weight:700;color:#b91c1c">Bear Phase</div>
-        <div style="font-size:11px;color:#991b1b;margin-top:3px">Contraction → Trough</div>
-        <div style="font-size:11px;color:#991b1b">Buy defensives, hold cash</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
+        <div style="padding:10px 12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--radius-sm);">
+          <div style="font-size:11px;font-weight:700;color:#15803d;margin-bottom:3px;">BULL PHASE · Expansion → Peak</div>
+          <div style="font-size:11px;color:#166534;line-height:1.5;">Rising prices · Strong earnings · FII inflows · High confidence</div>
+          <div style="font-size:10px;font-weight:600;color:#16a34a;margin-top:5px;">Strategy: Buy cyclicals &amp; growth</div>
+        </div>
+        <div style="padding:10px 12px;background:#fff5f5;border:1px solid #fecaca;border-radius:var(--radius-sm);">
+          <div style="font-size:11px;font-weight:700;color:#b91c1c;margin-bottom:3px;">BEAR PHASE · Contraction → Trough</div>
+          <div style="font-size:11px;color:#991b1b;line-height:1.5;">Falling prices · Weak earnings · FII exits · Fear dominates</div>
+          <div style="font-size:10px;font-weight:600;color:#dc2626;margin-top:5px;">Strategy: Hold defensives &amp; cash</div>
+        </div>
       </div>
     </div>
     <div class="cycle-grid" id="cycle-grid"></div>
@@ -668,7 +696,7 @@ const SECTORS = [
 const sg = document.getElementById('sector-grid');
 SECTORS.forEach(s => {
   const up = s.pct >= 0;
-  const sentiment = up ? '🐂' : '🐻';
+  
   const bar = Math.min(Math.abs(s.pct) * 30, 100);
   const div = document.createElement('div');
   div.className = 'sc-card';
