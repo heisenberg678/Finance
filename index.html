@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEWSPACE — Finance Intelligence for Students</title>
+<title>NEWSPACE — Every News Simplified &amp; Summarized</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -16,17 +16,17 @@
   --border:#e4e4e7;--border2:#d4d4d8;
   --radius:12px;--radius-sm:7px;--radius-xs:4px;
 }
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6;min-height:100vh;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6;min-height:100vh;}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:10px}
 
 /* NAV */
 nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:54px;display:flex;align-items:center;padding:0 1.5rem;gap:1rem;}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;letter-spacing:-0.5px;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:7px;flex-shrink:0}
+.logo{font-family:'Fraunces',serif;letter-spacing:0.5px;font-weight:800;font-size:18px;letter-spacing:-0.5px;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:7px;flex-shrink:0}
 .logo-mark{width:22px;height:22px;background:var(--accent);border-radius:5px;display:grid;place-items:center}
 .nav-tabs{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none;}
 .nav-tabs::-webkit-scrollbar{display:none}
-.nav-tab{padding:5px 12px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;color:var(--ink3);cursor:pointer;white-space:nowrap;transition:all .12s;border:none;background:none;font-family:'DM Sans',sans-serif;}
+.nav-tab{padding:5px 12px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;color:var(--ink3);cursor:pointer;white-space:nowrap;transition:all .12s;border:none;background:none;font-family:'Inter',sans-serif;}
 .nav-tab:hover{color:var(--ink);background:var(--surface2)}
 .nav-tab.active{color:var(--accent);background:var(--accent-bg);font-weight:600}
 .nav-right{flex-shrink:0}
@@ -41,7 +41,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
 .ticker{background:var(--ink);overflow:hidden;padding:8px 0}
 .ticker-inner{display:inline-flex;animation:slide 40s linear infinite;white-space:nowrap}
 .ticker-inner:hover{animation-play-state:paused}
-.t-item{display:inline-flex;align-items:center;gap:8px;padding:0 2rem;font-size:11.5px;font-weight:500;color:rgba(255,255,255,.5);font-family:'DM Mono',monospace}
+.t-item{display:inline-flex;align-items:center;gap:8px;padding:0 2rem;font-size:11.5px;font-weight:500;color:rgba(255,255,255,.5);font-family:'JetBrains Mono',monospace}
 .t-name{color:rgba(255,255,255,.85)}
 .t-up{color:#4ade80}.t-dn{color:#f87171}
 @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -51,9 +51,9 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
 .api-banner-text strong{font-size:14px;color:var(--ink)}
 .api-banner-text p{font-size:12px;color:var(--ink3);margin-top:2px}
 .api-input-row{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
-.api-input-row input{padding:7px 11px;border:1px solid var(--border2);border-radius:var(--radius-sm);font-size:12px;font-family:'DM Mono',monospace;background:var(--bg);color:var(--ink);outline:none;width:220px}
+.api-input-row input{padding:7px 11px;border:1px solid var(--border2);border-radius:var(--radius-sm);font-size:12px;font-family:'JetBrains Mono',monospace;background:var(--bg);color:var(--ink);outline:none;width:220px}
 .api-input-row input:focus{border-color:var(--accent)}
-.api-input-row button{padding:7px 16px;background:var(--ink);color:#fff;border:none;border-radius:var(--radius-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+.api-input-row button{padding:7px 16px;background:var(--ink);color:#fff;border:none;border-radius:var(--radius-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
 .api-connected-pill{display:flex;align-items:center;gap:6px;padding:6px 12px;background:var(--up-bg);border-radius:var(--radius-sm);font-size:12px;font-weight:600;color:var(--up)}
 .api-hint{font-size:11px;color:var(--ink4);margin-top:5px}
 .api-hint a{color:var(--accent)}
@@ -63,28 +63,28 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
 .section-hdr{display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:1rem}
 .section-hdr-left{display:flex;align-items:center;gap:8px}
 .section-icon{width:28px;height:28px;border-radius:var(--radius-xs);background:var(--accent-bg);display:grid;place-items:center;color:var(--accent);flex-shrink:0}
-.section-hdr h2{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--ink)}
+.section-hdr h2{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--ink)}
 .section-hdr-right{font-size:11px;color:var(--ink4)}
 
 /* DASHBOARD */
-.dash-greeting{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-0.5px;color:var(--ink);margin-bottom:3px}
+.dash-greeting{font-family:'Fraunces',serif;font-weight:800;font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-0.5px;color:var(--ink);margin-bottom:3px}
 .dash-date{font-size:13px;color:var(--ink3);margin-bottom:1.5rem}
 
 /* GIFT NIFTY */
 .gift-card{background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
 .gift-eyebrow{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#a5b4fc;margin-bottom:4px}
-.gift-card h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
+.gift-card h3{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
 .gift-card p{font-size:12px;color:rgba(255,255,255,.5);max-width:340px;line-height:1.5}
-.gift-val{font-family:'DM Mono',monospace;font-size:32px;font-weight:500;color:#fff;line-height:1;text-align:right}
-.gift-chg{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;margin-top:4px;text-align:right}
+.gift-val{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:500;color:#fff;line-height:1;text-align:right}
+.gift-chg{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;margin-top:4px;text-align:right}
 .gift-sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;text-align:right}
 
 /* MARKET CARDS */
 .market-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-bottom:1.5rem}
 .mcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem}
 .mcard-label{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);margin-bottom:5px}
-.mcard-val{font-family:'DM Mono',monospace;font-size:19px;font-weight:500;color:var(--ink);line-height:1}
-.mcard-chg{font-family:'DM Mono',monospace;font-size:12px;margin-top:3px}
+.mcard-val{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:500;color:var(--ink);line-height:1}
+.mcard-chg{font-family:'JetBrains Mono',monospace;font-size:12px;margin-top:3px}
 .chg-up{color:var(--up)}.chg-dn{color:var(--down)}
 .mcard-bar{height:3px;border-radius:2px;margin-top:9px;background:var(--surface2);overflow:hidden}
 .mcard-fill{height:100%;border-radius:2px}
@@ -94,7 +94,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
 .mood-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
 .mood-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem}
 .mood-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
-.mood-card h4{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.mood-card h4{font-family:'Fraunces',serif;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:5px}
 .mood-card p{font-size:12px;color:var(--ink3);line-height:1.55}
 .badge-bull{background:#dcfce7;color:#15803d}
 .badge-bear{background:#fee2e2;color:#b91c1c}
@@ -118,11 +118,11 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
 .nc-source{font-size:11px;color:var(--ink4)}
 .nc-sep{color:var(--border2)}
 .nc-time{font-size:11px;color:var(--ink4)}
-.nc-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;line-height:1.3;color:var(--ink);margin-bottom:6px}
+.nc-title{font-family:'Fraunces',serif;font-size:15px;font-weight:700;line-height:1.3;color:var(--ink);margin-bottom:6px}
 .ncard.featured .nc-title{font-size:18px}
 .nc-desc{font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:11px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .nc-actions{display:flex;align-items:center;gap:9px}
-.btn-ai{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:var(--accent-bg);color:var(--accent);border:none;border-radius:var(--radius-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .12s}
+.btn-ai{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:var(--accent-bg);color:var(--accent);border:none;border-radius:var(--radius-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background .12s}
 .btn-ai:hover{background:#dbeafe}
 .btn-read{font-size:12px;font-weight:500;color:var(--ink4);text-decoration:none}
 .btn-read:hover{color:var(--ink)}
@@ -145,7 +145,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
 .sc-card:hover{border-color:var(--border2);transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.06)}
 .sc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
 .sc-name{font-size:13px;font-weight:600;color:var(--ink)}
-.sc-pct{font-family:'DM Mono',monospace;font-size:13px;font-weight:500}
+.sc-pct{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500}
 .sc-bar-bg{height:4px;background:var(--surface2);border-radius:2px;margin-bottom:8px;overflow:hidden}
 .sc-bar{height:100%;border-radius:2px}
 .sc-news{font-size:11px;color:var(--ink3);line-height:1.5}
@@ -163,7 +163,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
 .ph-expand{background:#dcfce7;color:#15803d}
 .ph-peak{background:#fef9c3;color:#92400e}
 .ph-contract{background:#fee2e2;color:#b91c1c}
-.cyc-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.cyc-title{font-family:'Fraunces',serif;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:5px}
 .cyc-text{font-size:12px;color:var(--ink3);line-height:1.6;margin-bottom:8px}
 .cyc-tags{display:flex;flex-wrap:wrap;gap:5px}
 .cyc-tag{background:var(--surface2);color:var(--ink3);font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px}
@@ -192,7 +192,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
 .ca-table td{font-size:13px;color:var(--ink);padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
 .ca-table tr:last-child td{border-bottom:none}
 .ca-table tr:hover td{background:var(--bg)}
-.ca-co{font-weight:600}.ca-sym{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink4)}
+.ca-co{font-weight:600}.ca-sym{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink4)}
 .ca-badge{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}
 .ca-div{background:#dbeafe;color:#1d4ed8}
 .ca-bonus{background:#dcfce7;color:#15803d}
@@ -201,13 +201,13 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
 .ca-buyback{background:#fee2e2;color:#b91c1c}
 
 /* DICTIONARY */
-.dict-search{width:100%;padding:10px 14px;border:1px solid var(--border2);border-radius:var(--radius-sm);font-size:14px;font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink);outline:none;margin-bottom:1rem}
+.dict-search{width:100%;padding:10px 14px;border:1px solid var(--border2);border-radius:var(--radius-sm);font-size:14px;font-family:'Inter',sans-serif;background:var(--surface);color:var(--ink);outline:none;margin-bottom:1rem}
 .dict-search:focus{border-color:var(--accent)}
 .dc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem 1.25rem;margin-bottom:9px;cursor:pointer;transition:border-color .14s}
 .dc-card:hover{border-color:var(--border2)}
 .dc-card.open{border-color:var(--accent)}
 .dc-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.dc-word{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--ink)}
+.dc-word{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--ink)}
 .dc-cat{font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;background:var(--surface2);color:var(--ink3);text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
 .dc-simple{font-size:13px;color:var(--ink3);margin-top:5px;line-height:1.6}
 .dc-detail{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
@@ -248,7 +248,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
 
 <!-- TICKER -->
 <div class="ticker">
-  <div class="ticker-inner"><!-- AUTO:TICKER_START --><span class="t-item"><span class="t-name">GIFT NIFTY</span><span class="t-up">▲ 24,074.00 (+0.24%)</span></span><span class="t-item"><span class="t-name">SENSEX</span><span class="t-up">▲ 79,111 (+0.24%)</span></span><span class="t-item"><span class="t-name">NIFTY 50</span><span class="t-up">▲ 24,046.00 (+0.24%)</span></span><span class="t-item"><span class="t-name">NIFTY BANK</span><span class="t-up">▲ 57,543.80 (+0.43%)</span></span><span class="t-item"><span class="t-name">NIFTY IT</span><span class="t-up">▲ 28,782.70 (+0.75%)</span></span><span class="t-item"><span class="t-name">USD/INR</span><span class="t-up">▲ ₹94.62 (+0.00%)</span></span><span class="t-item"><span class="t-name">GOLD</span><span class="t-up">~ $2,330.5/oz</span></span><span class="t-item"><span class="t-name">CRUDE OIL</span><span class="t-up">~ $78.4/bbl</span></span><span class="t-item"><span class="t-name">BITCOIN</span><span class="t-dn">▼ $65,604 (-1.22%)</span></span><span class="t-item"><span class="t-name">GIFT NIFTY</span><span class="t-up">▲ 24,074.00 (+0.24%)</span></span><span class="t-item"><span class="t-name">SENSEX</span><span class="t-up">▲ 79,111 (+0.24%)</span></span><span class="t-item"><span class="t-name">NIFTY 50</span><span class="t-up">▲ 24,046.00 (+0.24%)</span></span><span class="t-item"><span class="t-name">NIFTY BANK</span><span class="t-up">▲ 57,543.80 (+0.43%)</span></span><span class="t-item"><span class="t-name">NIFTY IT</span><span class="t-up">▲ 28,782.70 (+0.75%)</span></span><span class="t-item"><span class="t-name">USD/INR</span><span class="t-up">▲ ₹94.62 (+0.00%)</span></span><span class="t-item"><span class="t-name">GOLD</span><span class="t-up">~ $2,330.5/oz</span></span><span class="t-item"><span class="t-name">CRUDE OIL</span><span class="t-up">~ $78.4/bbl</span></span><span class="t-item"><span class="t-name">BITCOIN</span><span class="t-dn">▼ $65,604 (-1.22%)</span></span><!-- AUTO:TICKER_END -->
+  <div class="ticker-inner"><!-- AUTO:TICKER_START --><span class="t-item"><span class="t-name">GIFT NIFTY</span><span class="t-up">▲ 22,541.00 (+0.51%)</span></span><span class="t-item"><span class="t-name">SENSEX</span><span class="t-up">▲ 74,132 (+0.54%)</span></span><span class="t-item"><span class="t-name">NIFTY 50</span><span class="t-up">▲ 22,513.00 (+0.48%)</span></span><span class="t-item"><span class="t-name">NIFTY BANK</span><span class="t-dn">▼ 48,201.00 (-0.12%)</span></span><span class="t-item"><span class="t-name">NIFTY IT</span><span class="t-up">▲ 37,421.00 (+1.20%)</span></span><span class="t-item"><span class="t-name">USD/INR</span><span class="t-dn">▼ ₹83.42 (-0.10%)</span></span><span class="t-item"><span class="t-name">GOLD</span><span class="t-up">~ $2,330.5/oz</span></span><span class="t-item"><span class="t-name">CRUDE OIL</span><span class="t-up">~ $78.4/bbl</span></span><span class="t-item"><span class="t-name">BITCOIN</span><span class="t-up">▲ $67,210 (+2.30%)</span></span><span class="t-item"><span class="t-name">GIFT NIFTY</span><span class="t-up">▲ 22,541.00 (+0.51%)</span></span><span class="t-item"><span class="t-name">SENSEX</span><span class="t-up">▲ 74,132 (+0.54%)</span></span><span class="t-item"><span class="t-name">NIFTY 50</span><span class="t-up">▲ 22,513.00 (+0.48%)</span></span><span class="t-item"><span class="t-name">NIFTY BANK</span><span class="t-dn">▼ 48,201.00 (-0.12%)</span></span><span class="t-item"><span class="t-name">NIFTY IT</span><span class="t-up">▲ 37,421.00 (+1.20%)</span></span><span class="t-item"><span class="t-name">USD/INR</span><span class="t-dn">▼ ₹83.42 (-0.10%)</span></span><span class="t-item"><span class="t-name">GOLD</span><span class="t-up">~ $2,330.5/oz</span></span><span class="t-item"><span class="t-name">CRUDE OIL</span><span class="t-up">~ $78.4/bbl</span></span><span class="t-item"><span class="t-name">BITCOIN</span><span class="t-up">▲ $67,210 (+2.30%)</span></span><!-- AUTO:TICKER_END -->
   </div>
 </div>
 
@@ -272,19 +272,29 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
 <!-- DASHBOARD -->
 <div id="page-dashboard" class="page active">
   <div class="section">
-    <div class="dash-greeting">Good morning, Finance Student 📈</div>
-    <div class="dash-date" id="dash-date">Wednesday, 17 June 2026 &nbsp;·&nbsp; Data last updated 17 Jun 2026, 12:49 PM IST</div>
+    <!-- BULL BEAR HERO -->
+    <div style="display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#0f172a,#1e3a5f);border-radius:16px;padding:1.5rem 2rem;margin-bottom:1.5rem;overflow:hidden;position:relative;">
+      <!-- Bull SVG left -->
+      <div style="font-size:72px;line-height:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));user-select:none;">🐂</div>
+      <!-- Center text -->
+      <div style="text-align:center;flex:1;padding:0 1rem">
+        <div style="font-family:'Fraunces',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:800;color:#fff;letter-spacing:-0.5px;line-height:1.15;margin-bottom:6px;">Markets Never Sleep.<br><span style="color:#60a5fa">Stay Ahead.</span></div>
+        <div class="dash-date" id="dash-date" style="color:rgba(255,255,255,0.5);margin:0;font-size:12px;"></div>
+      </div>
+      <!-- Bear SVG right -->
+      <div style="font-size:72px;line-height:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));user-select:none;">🐻</div>
+    </div>
 
     <!-- AUTO:GIFT_START --><div class="gift-card">
   <div>
-    <div class="gift-eyebrow">Pre-Market Signal · Updated 17 Jun 2026, 12:49 PM IST</div>
+    <div class="gift-eyebrow">Pre-Market Signal · Updated 17 Jun 2026, 11:47 AM IST</div>
     <h3>GIFT NIFTY — Live Now</h3>
     <p>Trades before Indian markets open and signals how Sensex &amp; Nifty will open. Positive GIFT Nifty = gap-up opening expected.</p>
   </div>
   <div>
-    <div class="gift-val">24,074.00</div>
-    <div class="gift-chg" style="color:#6ee7b7">▲ 0.00 pts (+0.24%)</div>
-    <div class="gift-sub">Suggests Nifty opens ~24,044–24,104</div>
+    <div class="gift-val">22,541.00</div>
+    <div class="gift-chg" style="color:#6ee7b7">▲ 116.00 pts (+0.51%)</div>
+    <div class="gift-sub">Suggests Nifty opens ~22,511–22,571</div>
   </div>
 </div><!-- AUTO:GIFT_END -->
 
@@ -297,27 +307,27 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
     </div>
     <div class="market-grid"><!-- AUTO:MARKET_CARDS_START --><div class="mcard">
       <div class="mcard-label">SENSEX</div>
-      <div class="mcard-val">79,111</div>
-      <div class="mcard-chg chg-up">▲ 0 (+0.24%)</div>
-      <div class="mcard-bar"><div class="mcard-fill fill-up" style="width:5%"></div></div>
+      <div class="mcard-val">74,132</div>
+      <div class="mcard-chg chg-up">▲ 396 (+0.54%)</div>
+      <div class="mcard-bar"><div class="mcard-fill fill-up" style="width:11%"></div></div>
     </div><div class="mcard">
       <div class="mcard-label">NIFTY 50</div>
-      <div class="mcard-val">24,046.00</div>
-      <div class="mcard-chg chg-up">▲ 0.00 (+0.24%)</div>
-      <div class="mcard-bar"><div class="mcard-fill fill-up" style="width:5%"></div></div>
+      <div class="mcard-val">22,513.00</div>
+      <div class="mcard-chg chg-up">▲ 107.00 (+0.48%)</div>
+      <div class="mcard-bar"><div class="mcard-fill fill-up" style="width:10%"></div></div>
     </div><div class="mcard">
       <div class="mcard-label">NIFTY BANK</div>
-      <div class="mcard-val">57,543.80</div>
-      <div class="mcard-chg chg-up">▲ 0.00 (+0.43%)</div>
-      <div class="mcard-bar"><div class="mcard-fill fill-up" style="width:9%"></div></div>
+      <div class="mcard-val">48,201.00</div>
+      <div class="mcard-chg chg-dn">▼ 58.00 (-0.12%)</div>
+      <div class="mcard-bar"><div class="mcard-fill fill-dn" style="width:2%"></div></div>
     </div><div class="mcard">
       <div class="mcard-label">NIFTY IT</div>
-      <div class="mcard-val">28,782.70</div>
-      <div class="mcard-chg chg-up">▲ 0.00 (+0.75%)</div>
-      <div class="mcard-bar"><div class="mcard-fill fill-up" style="width:15%"></div></div>
+      <div class="mcard-val">37,421.00</div>
+      <div class="mcard-chg chg-up">▲ 444.00 (+1.20%)</div>
+      <div class="mcard-bar"><div class="mcard-fill fill-up" style="width:24%"></div></div>
     </div><div class="mcard">
       <div class="mcard-label">USD / INR</div>
-      <div class="mcard-val">₹94.62</div>
+      <div class="mcard-val">₹83.42</div>
       <div class="mcard-chg chg-dn">Live rate</div>
       <div class="mcard-bar"><div class="mcard-fill fill-dn" style="width:30%"></div></div>
     </div><div class="mcard">
@@ -332,6 +342,23 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
       <div class="section-hdr-left">
         <div class="section-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
         <h2>Market Mood Today</h2>
+      </div>
+    </div>
+    <!-- BULL VS BEAR BANNER -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem;">
+      <div style="background:linear-gradient(135deg,#052e16,#14532d);border-radius:var(--radius);padding:1.1rem 1.25rem;display:flex;align-items:center;gap:12px;">
+        <span style="font-size:42px;line-height:1">🐂</span>
+        <div>
+          <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:#4ade80;margin-bottom:2px">Bull Market</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.5">Prices rising · Optimism high · Buy the dip mentality · FIIs flowing in</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(135deg,#450a0a,#7f1d1d);border-radius:var(--radius);padding:1.1rem 1.25rem;display:flex;align-items:center;gap:12px;">
+        <span style="font-size:42px;line-height:1">🐻</span>
+        <div>
+          <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:#f87171;margin-bottom:2px">Bear Market</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.55);line-height:1.5">Prices falling · Fear dominates · Sell-off mode · FIIs pulling out</div>
+        </div>
       </div>
     </div>
     <div class="mood-grid">
@@ -391,6 +418,25 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
       <div class="section-hdr-left">
         <div class="section-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></div>
         <h2>Market Cycle — Where India Stands</h2>
+      </div>
+    </div>
+    <!-- CYCLE BULL BEAR VISUAL -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+      <div style="flex:1;padding:1rem 1.25rem;background:linear-gradient(135deg,#f0fdf4,#dcfce7);text-align:center;border-right:1px solid var(--border)">
+        <div style="font-size:48px;line-height:1;margin-bottom:6px">🐂</div>
+        <div style="font-family:'Fraunces',serif;font-size:14px;font-weight:700;color:#15803d">Bull Phase</div>
+        <div style="font-size:11px;color:#166534;margin-top:3px">Expansion → Peak</div>
+        <div style="font-size:11px;color:#166534">Buy cyclicals, growth stocks</div>
+      </div>
+      <div style="padding:1rem;text-align:center;flex-shrink:0">
+        <div style="font-size:22px">⟷</div>
+        <div style="font-size:10px;font-weight:600;color:var(--ink4);letter-spacing:.5px;text-transform:uppercase;margin-top:3px">Market<br>Cycle</div>
+      </div>
+      <div style="flex:1;padding:1rem 1.25rem;background:linear-gradient(135deg,#fff5f5,#fee2e2);text-align:center;border-left:1px solid var(--border)">
+        <div style="font-size:48px;line-height:1;margin-bottom:6px">🐻</div>
+        <div style="font-family:'Fraunces',serif;font-size:14px;font-weight:700;color:#b91c1c">Bear Phase</div>
+        <div style="font-size:11px;color:#991b1b;margin-top:3px">Contraction → Trough</div>
+        <div style="font-size:11px;color:#991b1b">Buy defensives, hold cash</div>
       </div>
     </div>
     <div class="cycle-grid" id="cycle-grid"></div>
@@ -495,19 +541,40 @@ async function fetchNews(q) {
   feed.innerHTML = '<div class="feed-loading"><div class="spinner"></div>Fetching live headlines...</div>';
   summaryCache = {};
   feedArticles = [];
-  try {
-    const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(q)}&language=en&sortBy=publishedAt&pageSize=12&apiKey=${NEWS_KEY}`;
-    const r = await fetch(PROXY + encodeURIComponent(url));
-    if (!r.ok) throw new Error('fetch failed');
-    const d = await r.json();
-    if (!d.articles || d.articles.length === 0) throw new Error('no articles');
-    feedArticles = d.articles.filter(a => a.title && a.title !== '[Removed]').slice(0, 10);
-    renderFeed(feedArticles);
-  } catch(e) {
+
+  const newsUrl = 'https://newsapi.org/v2/everything?q=' + encodeURIComponent(q) + '&language=en&sortBy=publishedAt&pageSize=12&apiKey=' + NEWS_KEY;
+
+  // Try multiple CORS proxies in order until one works
+  const proxies = [
+    'https://corsproxy.io/?',
+    'https://api.allorigins.win/raw?url=',
+    'https://api.codetabs.com/v1/proxy?quest=',
+  ];
+
+  let success = false;
+
+  for (let i = 0; i < proxies.length; i++) {
+    try {
+      const r = await fetch(proxies[i] + encodeURIComponent(newsUrl));
+      if (!r.ok) continue;
+      const d = await r.json();
+      if (!d.articles || d.articles.length === 0) continue;
+      const filtered = d.articles.filter(function(a) { return a.title && a.title !== '[Removed]'; }).slice(0, 10);
+      if (filtered.length === 0) continue;
+      feedArticles = filtered;
+      renderFeed(feedArticles);
+      success = true;
+      break;
+    } catch(e) {
+      continue;
+    }
+  }
+
+  if (!success) {
     feedArticles = DEMO_ARTICLES;
     renderFeed(DEMO_ARTICLES);
-    document.getElementById('news-feed').insertAdjacentHTML('afterbegin',
-      '<div style="background:#fef9c3;border:1px solid #fde68a;border-radius:var(--radius-sm);padding:10px 14px;font-size:12px;color:var(--ink2);margin-bottom:12px">⚠ Live news needs the site to be hosted online (free on Netlify). Showing demo articles for now.</div>');
+    feed.insertAdjacentHTML('afterbegin',
+      '<div style="background:#fef9c3;border:1px solid #fde68a;border-radius:var(--radius-sm);padding:10px 14px;font-size:12px;color:var(--ink2);margin-bottom:12px">Showing cached articles — live feed will retry shortly.</div>');
   }
 }
 
@@ -601,6 +668,7 @@ const SECTORS = [
 const sg = document.getElementById('sector-grid');
 SECTORS.forEach(s => {
   const up = s.pct >= 0;
+  const sentiment = up ? '🐂' : '🐻';
   const bar = Math.min(Math.abs(s.pct) * 30, 100);
   const div = document.createElement('div');
   div.className = 'sc-card';
@@ -636,7 +704,7 @@ TRENDS.forEach(t => {
 });
 
 // ── MARKET CYCLE ──
-const PHASES = [
+const PHASES = [ // market cycle phases
   { ph:'Trough', cls:'ph-trough', title:'Trough — Maximum Pessimism', text:'Markets at their lowest. Bad news everywhere. Smart money quietly buying quality at deep discounts. GDP negative, unemployment high.', tags:['Negative GDP','High unemployment','P/E at lows','Wide spreads'], current:false },
   { ph:'Expansion', cls:'ph-expand', title:'Early Expansion — Recovery Begins', text:'Economy starts recovering. Earnings improving. Interest rates still low. FII inflows pick up. Best time to buy cyclicals.', tags:['GDP turning positive','PMI above 50','FII buying','Falling yields'], current:false },
   { ph:'Late Cycle ⭐', cls:'ph-peak', title:'Late Cycle — India is HERE', text:'Economy growing well but inflation rising. Central bank on hold. Valuations stretched. Quality over momentum. This is where discipline matters.', tags:['CPI above target','RBI on hold','High valuations','FII volatile'], current:true },
@@ -753,5 +821,31 @@ const DEMO_ARTICLES = [
 
 }); // end DOMContentLoaded
 </script>
+
+<footer style="background:#09090b;color:rgba(255,255,255,0.35);padding:2rem 1.5rem;margin-top:2rem;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-bottom:1.25rem;border-bottom:1px solid rgba(255,255,255,0.08);">
+      <div>
+        <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.5px;margin-bottom:3px;">NEWSPACE</div>
+        <div style="font-size:12px;">Every News Simplified &amp; Summarized</div>
+      </div>
+      <div style="display:flex;gap:1.5rem;font-size:12px;">
+        <span>News Feed</span>
+        <span>Sectors</span>
+        <span>Dictionary</span>
+        <span>Market Cycles</span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-top:1.25rem;">
+      <div style="font-size:12px;">
+        AI summaries are for educational purposes only. Always verify before making financial decisions.
+      </div>
+      <div style="font-size:12px;display:flex;align-items:center;gap:6px;">
+        Designed &amp; built by
+        <span style="color:#93c5fd;font-weight:600;font-size:13px;">Sarthak Hiwale</span>
+      </div>
+    </div>
+  </div>
+</footer>
 </body>
 </html>
