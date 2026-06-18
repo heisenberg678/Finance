@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEWSPACE — Every News Simplified &amp; Summarized</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#09090b;--ink2:#3f3f46;--ink3:#71717a;--ink4:#a1a1aa;
+  --bg:#fafaf9;--surface:#ffffff;--surface2:#f4f4f5;
+  --accent:#2563eb;--accent-bg:#eff6ff;
+  --up:#16a34a;--down:#dc2626;--up-bg:#f0fdf4;
+  --border:#e4e4e7;--border2:#d4d4d8;
+  --radius:12px;--radius-sm:7px;--radius-xs:4px;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6;min-height:100vh;}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:10px}
+
+
+/* ONBOARDING MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
+.modal-overlay.hidden{display:none}
+.modal{background:var(--surface);border-radius:16px;padding:2rem;max-width:480px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,0.2)}
+.modal-logo{font-family:'Fraunces',serif;font-size:22px;font-weight:800;color:var(--ink);margin-bottom:4px}
+.modal-sub{font-size:13px;color:var(--ink3);margin-bottom:1.5rem}
+.modal-label{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--ink4);margin-bottom:8px}
+.modal-input{width:100%;padding:10px 14px;border:1.5px solid var(--border2);border-radius:var(--radius-sm);font-size:14px;font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);outline:none;margin-bottom:1.25rem}
+.modal-input:focus{border-color:var(--accent)}
+.interest-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.5rem}
+.interest-chip{padding:9px 12px;border:1.5px solid var(--border2);border-radius:var(--radius-sm);font-size:13px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all .12s;display:flex;align-items:center;gap:7px;user-select:none}
+.interest-chip:hover{border-color:var(--accent);color:var(--accent)}
+.interest-chip.selected{border-color:var(--accent);background:var(--accent-bg);color:var(--accent);font-weight:600}
+.interest-chip .chip-icon{font-size:16px;line-height:1}
+.modal-btn{width:100%;padding:11px;background:var(--ink);color:#fff;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .15s}
+.modal-btn:hover{opacity:.85}
+.modal-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* PERSONALIZED GREETING */
+.user-greeting{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:8px}
+.greeting-text{font-family:'Fraunces',serif;font-size:clamp(1.1rem,2.5vw,1.4rem);font-weight:700;color:var(--ink)}
+.greeting-text span{color:var(--accent)}
+.greeting-edit{font-size:12px;color:var(--ink4);cursor:pointer;display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--border2);border-radius:20px;transition:all .12s}
+.greeting-edit:hover{color:var(--ink);border-color:var(--ink)}
+
+/* INTERESTS BAR */
+.interests-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:1rem;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm)}
+.interests-bar-label{font-size:11px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.5px;flex-shrink:0}
+.interest-tag{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--accent-bg);color:var(--accent)}
+.interests-change{font-size:11px;color:var(--ink4);cursor:pointer;margin-left:auto;flex-shrink:0}
+.interests-change:hover{color:var(--accent)}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:54px;display:flex;align-items:center;padding:0 1.5rem;gap:1rem;}
+.logo{font-family:'Fraunces',serif;letter-spacing:0.5px;font-weight:800;font-size:18px;letter-spacing:-0.5px;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:7px;flex-shrink:0}
+.logo-mark{width:22px;height:22px;background:var(--accent);border-radius:5px;display:grid;place-items:center}
+.nav-tabs{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none;}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{padding:5px 12px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;color:var(--ink3);cursor:pointer;white-space:nowrap;transition:all .12s;border:none;background:none;font-family:'Inter',sans-serif;}
+.nav-tab:hover{color:var(--ink);background:var(--surface2)}
+.nav-tab.active{color:var(--accent);background:var(--accent-bg);font-weight:600}
+.nav-right{flex-shrink:0}
+.live-pill{display:flex;align-items:center;gap:5px;padding:4px 10px;background:var(--up-bg);border-radius:20px;font-size:11px;font-weight:600;color:var(--up)}
+.live-dot{width:5px;height:5px;border-radius:50%;background:var(--up);animation:blink 1.8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* PAGES */
+.page{display:none !important}.page.active{display:block !important}
+
+/* TICKER */
+.ticker{background:var(--ink);overflow:hidden;padding:8px 0}
+.ticker-inner{display:inline-flex;animation:slide 40s linear infinite;white-space:nowrap}
+.ticker-inner:hover{animation-play-state:paused}
+.t-item{display:inline-flex;align-items:center;gap:8px;padding:0 2rem;font-size:11.5px;font-weight:500;color:rgba(255,255,255,.5);font-family:'JetBrains Mono',monospace}
+.t-name{color:rgba(255,255,255,.85)}
+.t-up{color:#4ade80}.t-dn{color:#f87171}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* API BANNER */
+.api-banner{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:1rem 1.25rem;max-width:1100px;margin:1rem auto;display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap}
+.api-banner-text strong{font-size:14px;color:var(--ink)}
+.api-banner-text p{font-size:12px;color:var(--ink3);margin-top:2px}
+.api-input-row{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.api-input-row input{padding:7px 11px;border:1px solid var(--border2);border-radius:var(--radius-sm);font-size:12px;font-family:'JetBrains Mono',monospace;background:var(--bg);color:var(--ink);outline:none;width:220px}
+.api-input-row input:focus{border-color:var(--accent)}
+.api-input-row button{padding:7px 16px;background:var(--ink);color:#fff;border:none;border-radius:var(--radius-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+.api-connected-pill{display:flex;align-items:center;gap:6px;padding:6px 12px;background:var(--up-bg);border-radius:var(--radius-sm);font-size:12px;font-weight:600;color:var(--up)}
+.api-hint{font-size:11px;color:var(--ink4);margin-top:5px}
+.api-hint a{color:var(--accent)}
+
+/* SECTION WRAPPER */
+.section{max-width:1100px;margin:0 auto;padding:1.5rem}
+.section-hdr{display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:1rem}
+.section-hdr-left{display:flex;align-items:center;gap:8px}
+.section-icon{width:28px;height:28px;border-radius:var(--radius-xs);background:var(--accent-bg);display:grid;place-items:center;color:var(--accent);flex-shrink:0}
+.section-hdr h2{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--ink)}
+.section-hdr-right{font-size:11px;color:var(--ink4)}
+
+/* DASHBOARD */
+.dash-greeting{font-family:'Fraunces',serif;font-weight:800;font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-0.5px;color:var(--ink);margin-bottom:3px}
+.dash-date{font-size:13px;color:var(--ink3);margin-bottom:1.5rem}
+
+/* GIFT NIFTY */
+.gift-card{background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.gift-eyebrow{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#a5b4fc;margin-bottom:4px}
+.gift-card h3{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
+.gift-card p{font-size:12px;color:rgba(255,255,255,.5);max-width:340px;line-height:1.5}
+.gift-val{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:500;color:#fff;line-height:1;text-align:right}
+.gift-chg{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;margin-top:4px;text-align:right}
+.gift-sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;text-align:right}
+
+/* MARKET CARDS */
+.market-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-bottom:1.5rem}
+.mcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem}
+.mcard-label{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink4);margin-bottom:5px}
+.mcard-val{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:500;color:var(--ink);line-height:1}
+.mcard-chg{font-family:'JetBrains Mono',monospace;font-size:12px;margin-top:3px}
+.chg-up{color:var(--up)}.chg-dn{color:var(--down)}
+.mcard-bar{height:3px;border-radius:2px;margin-top:9px;background:var(--surface2);overflow:hidden}
+.mcard-fill{height:100%;border-radius:2px}
+.fill-up{background:var(--up)}.fill-dn{background:var(--down)}
+
+/* MOOD GRID */
+.mood-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.mood-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem}
+.mood-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+.mood-card h4{font-family:'Fraunces',serif;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.mood-card p{font-size:12px;color:var(--ink3);line-height:1.55}
+.badge-bull{background:#dcfce7;color:#15803d}
+.badge-bear{background:#fee2e2;color:#b91c1c}
+.badge-watch{background:#fef9c3;color:#a16207}
+.badge-pos{background:#eff6ff;color:#1d4ed8}
+
+/* NEWS */
+.news-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.npill{padding:5px 13px;border-radius:20px;font-size:12px;font-weight:500;border:1px solid var(--border2);background:var(--surface);color:var(--ink2);cursor:pointer;transition:all .12s}
+.npill:hover{border-color:var(--ink)}
+.npill.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ncard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;margin-bottom:9px;transition:all .14s}
+.ncard:hover{border-color:var(--border2);box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.ncard.featured{border-left:3px solid var(--accent)}
+.nc-meta{display:flex;align-items:center;gap:7px;margin-bottom:8px;flex-wrap:wrap}
+.tag{font-size:10px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;padding:2px 7px;border-radius:3px}
+.tag-a{background:#dbeafe;color:#1d4ed8}
+.tag-b{background:#ede9fe;color:#6d28d9}
+.tag-c{background:#dcfce7;color:#15803d}
+.tag-d{background:#fef9c3;color:#a16207}
+.nc-source{font-size:11px;color:var(--ink4)}
+.nc-sep{color:var(--border2)}
+.nc-time{font-size:11px;color:var(--ink4)}
+.nc-title{font-family:'Fraunces',serif;font-size:15px;font-weight:700;line-height:1.3;color:var(--ink);margin-bottom:6px}
+.ncard.featured .nc-title{font-size:18px}
+.nc-desc{font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:11px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.nc-actions{display:flex;align-items:center;gap:9px}
+.btn-ai{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:var(--accent-bg);color:var(--accent);border:none;border-radius:var(--radius-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background .12s}
+.btn-ai:hover{background:#dbeafe}
+.btn-read{font-size:12px;font-weight:500;color:var(--ink4);text-decoration:none}
+.btn-read:hover{color:var(--ink)}
+.sum-box{display:none;margin-top:11px;padding:13px 14px;background:var(--bg);border-radius:var(--radius-sm);border-left:3px solid var(--accent)}
+.sum-box.open{display:block}
+.sum-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:7px}
+.sum-text{font-size:13px;color:var(--ink);line-height:1.8}
+.sum-tip{margin-top:9px;padding:8px 10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xs);font-size:12px;color:var(--ink3);line-height:1.6}
+.dots-load{display:inline-flex;gap:3px;align-items:center}
+.dots-load span{width:4px;height:4px;border-radius:50%;background:var(--accent);opacity:.3;animation:dl 1s infinite}
+.dots-load span:nth-child(2){animation-delay:.2s}.dots-load span:nth-child(3){animation-delay:.4s}
+@keyframes dl{0%,100%{opacity:.2}50%{opacity:1}}
+.feed-loading{display:flex;align-items:center;gap:10px;padding:2.5rem 1rem;color:var(--ink4);font-size:13px}
+.spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* SECTORS */
+.sector-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.sc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem;transition:all .14s}
+.sc-card:hover{border-color:var(--border2);transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.sc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.sc-name{font-size:13px;font-weight:600;color:var(--ink)}
+.sc-pct{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500}
+.sc-bar-bg{height:4px;background:var(--surface2);border-radius:2px;margin-bottom:8px;overflow:hidden}
+.sc-bar{height:100%;border-radius:2px}
+.sc-news{font-size:11px;color:var(--ink3);line-height:1.5}
+
+/* TRENDS */
+.trend-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;margin-bottom:9px}
+.trend-signal{font-size:12px;font-weight:600;color:var(--accent);padding:6px 10px;background:var(--accent-bg);border-radius:var(--radius-xs);margin-top:9px}
+
+/* CYCLES */
+.cycle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.cyc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem;transition:border-color .14s}
+.cyc-card.current{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.cyc-phase{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:9px}
+.ph-trough{background:#ede9fe;color:#5b21b6}
+.ph-expand{background:#dcfce7;color:#15803d}
+.ph-peak{background:#fef9c3;color:#92400e}
+.ph-contract{background:#fee2e2;color:#b91c1c}
+.cyc-title{font-family:'Fraunces',serif;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.cyc-text{font-size:12px;color:var(--ink3);line-height:1.6;margin-bottom:8px}
+.cyc-tags{display:flex;flex-wrap:wrap;gap:5px}
+.cyc-tag{background:var(--surface2);color:var(--ink3);font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px}
+
+/* CREDIT CYCLE */
+.credit-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+@media(max-width:640px){.credit-wrap{grid-template-columns:1fr}}
+.credit-timeline{position:relative;padding-left:1.5rem}
+.credit-timeline::before{content:'';position:absolute;left:5px;top:0;bottom:0;width:2px;background:var(--border)}
+.ct-item{position:relative;margin-bottom:1.2rem}
+.ct-dot{position:absolute;left:-1.5rem;top:4px;width:12px;height:12px;border-radius:50%;border:2px solid var(--bg)}
+.ct-item.active .ct-dot{box-shadow:0 0 0 3px rgba(37,99,235,.2)}
+.ct-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.ct-now{display:inline-block;font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-bg);padding:1px 7px;border-radius:20px;margin-left:6px;vertical-align:middle}
+.ct-text{font-size:12px;color:var(--ink3);line-height:1.5}
+.credit-info{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem}
+.credit-info h4{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px}
+.ci-row{font-size:12px;margin-bottom:8px;line-height:1.5}
+.ci-key{font-weight:600;color:var(--ink)}
+.ci-val{color:var(--ink3)}
+
+/* CORPORATE ACTIONS */
+.ca-wrap{overflow-x:auto}
+.ca-table{width:100%;border-collapse:collapse}
+.ca-table th{font-size:11px;font-weight:600;color:var(--ink4);text-align:left;padding:8px 12px;background:var(--surface2);border-bottom:1px solid var(--border)}
+.ca-table td{font-size:13px;color:var(--ink);padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.ca-table tr:last-child td{border-bottom:none}
+.ca-table tr:hover td{background:var(--bg)}
+.ca-co{font-weight:600}.ca-sym{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink4)}
+.ca-badge{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}
+.ca-div{background:#dbeafe;color:#1d4ed8}
+.ca-bonus{background:#dcfce7;color:#15803d}
+.ca-split{background:#f3e8ff;color:#7e22ce}
+.ca-rights{background:#fef9c3;color:#92400e}
+.ca-buyback{background:#fee2e2;color:#b91c1c}
+
+/* DICTIONARY */
+.dict-search{width:100%;padding:10px 14px;border:1px solid var(--border2);border-radius:var(--radius-sm);font-size:14px;font-family:'Inter',sans-serif;background:var(--surface);color:var(--ink);outline:none;margin-bottom:1rem}
+.dict-search:focus{border-color:var(--accent)}
+.dc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem 1.25rem;margin-bottom:9px;cursor:pointer;transition:border-color .14s}
+.dc-card:hover{border-color:var(--border2)}
+.dc-card.open{border-color:var(--accent)}
+.dc-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.dc-word{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--ink)}
+.dc-cat{font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;background:var(--surface2);color:var(--ink3);text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+.dc-simple{font-size:13px;color:var(--ink3);margin-top:5px;line-height:1.6}
+.dc-detail{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.dc-card.open .dc-detail{display:block}
+.dc-full{font-size:13px;color:var(--ink2);line-height:1.75}
+.dc-example{margin-top:9px;padding:9px 11px;background:var(--surface2);border-radius:var(--radius-xs);font-size:12px;color:var(--ink3);font-style:italic;line-height:1.6}
+.dc-example strong{font-style:normal;color:var(--ink);font-weight:600}
+
+@media(max-width:640px){
+  nav{padding:0 1rem}
+  .section{padding:1rem}
+  .market-grid{grid-template-columns:repeat(2,1fr)}
+  .api-banner{flex-direction:column}
+  .api-input-row input{width:160px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#">
+    <div class="logo-mark"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1L1 4v4l5 3 5-3V4L6 1z" fill="white"/></svg></div>
+    NEWSPACE
+  </a>
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-page="dashboard">Dashboard</button>
+    <button class="nav-tab" data-page="news">News Feed</button>
+    <button class="nav-tab" data-page="sectors">Sectors</button>
+    <button class="nav-tab" data-page="trends">Trends</button>
+    <button class="nav-tab" data-page="cycles">Market &amp; Credit Cycles</button>
+    <button class="nav-tab" data-page="corporate">Corporate Actions</button>
+    <button class="nav-tab" data-page="dictionary">Dictionary</button>
+  </div>
+  <div class="nav-right">
+    <span class="live-pill"><span class="live-dot"></span>Live</span>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner"><!-- AUTO:TICKER_START --><span class="t-item"><span class="t-name">GIFT NIFTY</span><span class="t-up">▲ 22,541.00 (+0.51%)</span></span><span class="t-item"><span class="t-name">SENSEX</span><span class="t-up">▲ 74,132 (+0.54%)</span></span><span class="t-item"><span class="t-name">NIFTY 50</span><span class="t-up">▲ 22,513.00 (+0.48%)</span></span><span class="t-item"><span class="t-name">NIFTY BANK</span><span class="t-dn">▼ 48,201.00 (-0.12%)</span></span><span class="t-item"><span class="t-name">NIFTY IT</span><span class="t-up">▲ 37,421.00 (+1.20%)</span></span><span class="t-item"><span class="t-name">USD/INR</span><span class="t-dn">▼ ₹83.42 (-0.10%)</span></span><span class="t-item"><span class="t-name">GOLD</span><span class="t-up">~ $2,330.5/oz</span></span><span class="t-item"><span class="t-name">CRUDE OIL</span><span class="t-up">~ $78.4/bbl</span></span><span class="t-item"><span class="t-name">BITCOIN</span><span class="t-up">▲ $67,210 (+2.30%)</span></span><span class="t-item"><span class="t-name">GIFT NIFTY</span><span class="t-up">▲ 22,541.00 (+0.51%)</span></span><span class="t-item"><span class="t-name">SENSEX</span><span class="t-up">▲ 74,132 (+0.54%)</span></span><span class="t-item"><span class="t-name">NIFTY 50</span><span class="t-up">▲ 22,513.00 (+0.48%)</span></span><span class="t-item"><span class="t-name">NIFTY BANK</span><span class="t-dn">▼ 48,201.00 (-0.12%)</span></span><span class="t-item"><span class="t-name">NIFTY IT</span><span class="t-up">▲ 37,421.00 (+1.20%)</span></span><span class="t-item"><span class="t-name">USD/INR</span><span class="t-dn">▼ ₹83.42 (-0.10%)</span></span><span class="t-item"><span class="t-name">GOLD</span><span class="t-up">~ $2,330.5/oz</span></span><span class="t-item"><span class="t-name">CRUDE OIL</span><span class="t-up">~ $78.4/bbl</span></span><span class="t-item"><span class="t-name">BITCOIN</span><span class="t-up">▲ $67,210 (+2.30%)</span></span><!-- AUTO:TICKER_END -->
+  </div>
+</div>
+
+<!-- API BANNER -->
+<div class="api-banner" id="api-banner">
+  <div class="api-banner-text">
+    <strong>⚡ Enable AI Summaries</strong>
+    <p>Add your free Anthropic API key to get plain-language breakdowns of every article.</p>
+  </div>
+  <div id="api-ui">
+    <div class="api-input-row">
+      <input type="password" id="claude-key" placeholder="sk-ant-api03-..." />
+      <button onclick="saveKey()">Activate</button>
+    </div>
+    <div class="api-hint">Free key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> — $5 free credits included.</div>
+  </div>
+</div>
+
+<!-- PAGES -->
+
+<!-- DASHBOARD -->
+<div id="page-dashboard" class="page active">
+  <div class="section">
+    <!-- HERO BANNER -->
+    <div style="background:linear-gradient(135deg,#0f172a 0%,#1a2d5a 100%);border-radius:16px;padding:2.25rem 2.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden;">
+      <!-- Subtle grid lines decoration -->
+      <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;"></div>
+      <!-- Glowing orb decoration -->
+      <div style="position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(99,102,241,0.15) 0%,transparent 70%);pointer-events:none;"></div>
+      <div style="position:relative;z-index:1;">
+        <!-- Live badge -->
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:600;color:#94a3b8;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:1.25rem;">
+          <span style="width:5px;height:5px;border-radius:50%;background:#4ade80;display:inline-block;animation:blink 1.8s infinite;"></span>
+          Live · Auto-updated daily at 7AM IST
+        </div>
+        <!-- Main tagline -->
+        <div style="font-family:'Fraunces',serif;font-size:clamp(1.5rem,4vw,2.4rem);font-weight:800;color:#f8fafc;letter-spacing:-0.5px;line-height:1.2;margin-bottom:1rem;">Every News<br><span style="color:#818cf8;">Simplified &amp; Summarized.</span></div>
+        <!-- Quote -->
+        <div style="font-size:13px;color:rgba(255,255,255,0.4);font-style:italic;line-height:1.6;max-width:480px;border-left:2px solid rgba(129,140,248,0.4);padding-left:12px;margin-bottom:1.25rem;">"An investment in knowledge pays the best interest." — Benjamin Franklin</div>
+        <!-- Date -->
+        <div id="dash-date" style="font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.3px;"></div>
+      </div>
+    </div>
+
+    <!-- AUTO:GIFT_START --><div class="gift-card">
+  <div>
+    <div class="gift-eyebrow">Pre-Market Signal · Updated 17 Jun 2026, 11:47 AM IST</div>
+    <h3>GIFT NIFTY — Live Now</h3>
+    <p>Trades before Indian markets open and signals how Sensex &amp; Nifty will open. Positive GIFT Nifty = gap-up opening expected.</p>
+  </div>
+  <div>
+    <div class="gift-val" id="gift-val">—</div>
+    <div class="gift-chg" id="gift-chg" style="color:#6ee7b7">Loading...</div>
+    <div class="gift-sub" id="gift-sub">Fetching live data...</div>
+  </div>
+</div><!-- AUTO:GIFT_END -->
+
+    <div class="section-hdr">
+      <div class="section-hdr-left">
+        <div class="section-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h2>Overall Market Trends</h2>
+      </div>
+      <span class="section-hdr-right">Today</span>
+    </div>
+    <div class="market-grid"><!-- AUTO:MARKET_CARDS_START -->
+    <div class="mcard" id="mc-SENSEX">
+      <div class="mcard-label">SENSEX</div>
+      <div class="mcard-val" id="mv-SENSEX">—</div>
+      <div class="mcard-chg" id="mc2-SENSEX">Loading...</div>
+      <div class="mcard-bar"><div class="mcard-fill" id="mb-SENSEX" style="width:0%"></div></div>
+    </div>
+    <div class="mcard" id="mc-NIFTY">
+      <div class="mcard-label">NIFTY 50</div>
+      <div class="mcard-val" id="mv-NIFTY">—</div>
+      <div class="mcard-chg" id="mc2-NIFTY">Loading...</div>
+      <div class="mcard-bar"><div class="mcard-fill" id="mb-NIFTY" style="width:0%"></div></div>
+    </div>
+    <div class="mcard" id="mc-BANKNIFTY">
+      <div class="mcard-label">NIFTY BANK</div>
+      <div class="mcard-val" id="mv-BANKNIFTY">—</div>
+      <div class="mcard-chg" id="mc2-BANKNIFTY">Loading...</div>
+      <div class="mcard-bar"><div class="mcard-fill" id="mb-BANKNIFTY" style="width:0%"></div></div>
+    </div>
+    <div class="mcard" id="mc-NIFTYIT">
+      <div class="mcard-label">NIFTY IT</div>
+      <div class="mcard-val" id="mv-NIFTYIT">—</div>
+      <div class="mcard-chg" id="mc2-NIFTYIT">Loading...</div>
+      <div class="mcard-bar"><div class="mcard-fill" id="mb-NIFTYIT" style="width:0%"></div></div>
+    </div>
+    <div class="mcard" id="mc-USDINR">
+      <div class="mcard-label">USD / INR</div>
+      <div class="mcard-val" id="mv-USDINR">—</div>
+      <div class="mcard-chg" id="mc2-USDINR">Loading...</div>
+      <div class="mcard-bar"><div class="mcard-fill" id="mb-USDINR" style="width:30%"></div></div>
+    </div>
+    <div class="mcard" id="mc-BTC">
+      <div class="mcard-label">BITCOIN</div>
+      <div class="mcard-val" id="mv-BTC">—</div>
+      <div class="mcard-chg" id="mc2-BTC">Loading...</div>
+      <div class="mcard-bar"><div class="mcard-fill" id="mb-BTC" style="width:0%"></div></div>
+    </div>
+    <!-- AUTO:MARKET_CARDS_END -->
+    </div>
+
+    <div class="section-hdr">
+      <div class="section-hdr-left">
+        <div class="section-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+        <h2>Market Mood Today</h2>
+      </div>
+    </div>
+    <!-- MARKET SENTIMENT CARDS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem;">
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--radius);padding:1.1rem 1.25rem;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#16a34a;flex-shrink:0;"></div>
+          <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:#14532d;">Bull Market</div>
+          <div style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:#16a34a;background:#dcfce7;padding:2px 7px;border-radius:3px;">RISING</div>
+        </div>
+        <div style="font-size:12px;color:#166534;line-height:1.6;">Prices rising · Investor optimism high · FIIs buying · Economic expansion phase</div>
+      </div>
+      <div style="background:#fff5f5;border:1px solid #fecaca;border-radius:var(--radius);padding:1.1rem 1.25rem;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#dc2626;flex-shrink:0;"></div>
+          <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:#7f1d1d;">Bear Market</div>
+          <div style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:#dc2626;background:#fee2e2;padding:2px 7px;border-radius:3px;">FALLING</div>
+        </div>
+        <div style="font-size:12px;color:#991b1b;line-height:1.6;">Prices falling · Fear dominates · FIIs selling · Economic contraction phase</div>
+      </div>
+    </div>
+    <div class="mood-grid">
+      <div class="mood-card"><span class="mood-badge badge-bull">🟢 Bullish</span><h4>FII buying resumed</h4><p>Foreign investors returned after 3 weeks of selling. ₹3,200 cr inflow today signals renewed confidence in India.</p></div>
+      <div class="mood-card"><span class="mood-badge badge-watch">🟡 Watch</span><h4>Inflation still elevated</h4><p>CPI at 5.1% — above RBI's 4% target. Rate cuts may be delayed. Bond markets pricing in late 2025 cut.</p></div>
+      <div class="mood-card"><span class="mood-badge badge-pos">🔵 Positive</span><h4>GDP upgraded to 7.2%</h4><p>India is the world's fastest-growing major economy. IMF &amp; World Bank both raised their forecasts this week.</p></div>
+      <div class="mood-card"><span class="mood-badge badge-bear">🔴 Risk</span><h4>US Fed staying hawkish</h4><p>Only 2 rate cuts expected in 2025. Strong dollar may pressure rupee and reduce FII inflows.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWS FEED -->
+<div id="page-news" class="page">
+  <div class="section">
+    <div class="news-pills" id="news-pills">
+      <div class="npill active" data-q="india finance economy RBI SEBI">All Finance</div>
+      <div class="npill" data-q="india economy RBI rupee fiscal budget">Indian Economy</div>
+      <div class="npill" data-q="sensex nifty stock market BSE NSE IPO shares">Stock Market</div>
+      <div class="npill" data-q="federal reserve global markets dollar bonds wall street">Global Markets</div>
+      <div class="npill" data-q="world trade geopolitics oil commodity">World News</div>
+    </div>
+    <div id="news-feed"><div class="feed-loading"><div class="spinner"></div>Fetching today's headlines...</div></div>
+  </div>
+</div>
+
+<!-- SECTORS -->
+<div id="page-sectors" class="page">
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-hdr-left">
+        <div class="section-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="6" height="18"/><rect x="9" y="8" width="6" height="13"/><rect x="16" y="13" width="6" height="8"/></svg></div>
+        <h2>Sector Performance</h2>
+      </div>
+      <span class="section-hdr-right">Today's movement</span>
+    </div>
+    <div class="sector-grid" id="sector-grid"></div>
+  </div>
+</div>
+
+<!-- TRENDS -->
+<div id="page-trends" class="page">
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-hdr-left">
+        <div class="section-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <h2>Macro Trends to Watch</h2>
+      </div>
+    </div>
+    <div id="trends-list"></div>
+  </div>
+</div>
+
+<!-- CYCLES -->
+<div id="page-cycles" class="page">
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-hdr-left">
+        <div class="section-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></div>
+        <h2>Market Cycle — Where India Stands</h2>
+      </div>
+    </div>
+    <!-- MARKET CYCLE INDICATOR -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.25rem;">
+      <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink4);margin-bottom:12px;">Market Cycle Spectrum</div>
+      <!-- Progress bar style cycle indicator -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;margin-bottom:10px;">
+        <div style="text-align:center;">
+          <div style="height:6px;background:#ede9fe;border-radius:3px 0 0 3px;margin-bottom:5px;"></div>
+          <div style="font-size:10px;font-weight:600;color:#6d28d9;">Trough</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="height:6px;background:#dcfce7;margin-bottom:5px;"></div>
+          <div style="font-size:10px;font-weight:600;color:#15803d;">Expansion</div>
+        </div>
+        <div style="text-align:center;position:relative;">
+          <div style="height:6px;background:#fef08a;margin-bottom:5px;position:relative;">
+            <div style="position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:14px;height:14px;background:#2563eb;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 3px rgba(37,99,235,0.2);"></div>
+          </div>
+          <div style="font-size:10px;font-weight:700;color:#2563eb;">Peak ← India</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="height:6px;background:#fee2e2;border-radius:0 3px 3px 0;margin-bottom:5px;"></div>
+          <div style="font-size:10px;font-weight:600;color:#b91c1c;">Contraction</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
+        <div style="padding:10px 12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--radius-sm);">
+          <div style="font-size:11px;font-weight:700;color:#15803d;margin-bottom:3px;">BULL PHASE · Expansion → Peak</div>
+          <div style="font-size:11px;color:#166534;line-height:1.5;">Rising prices · Strong earnings · FII inflows · High confidence</div>
+          <div style="font-size:10px;font-weight:600;color:#16a34a;margin-top:5px;">Strategy: Buy cyclicals &amp; growth</div>
+        </div>
+        <div style="padding:10px 12px;background:#fff5f5;border:1px solid #fecaca;border-radius:var(--radius-sm);">
+          <div style="font-size:11px;font-weight:700;color:#b91c1c;margin-bottom:3px;">BEAR PHASE · Contraction → Trough</div>
+          <div style="font-size:11px;color:#991b1b;line-height:1.5;">Falling prices · Weak earnings · FII exits · Fear dominates</div>
+          <div style="font-size:10px;font-weight:600;color:#dc2626;margin-top:5px;">Strategy: Hold defensives &amp; cash</div>
+        </div>
+      </div>
+    </div>
+    <div class="cycle-grid" id="cycle-grid"></div>
+    <div class="section-hdr" style="margin-top:2rem">
+      <div class="section-hdr-left">
+        <div class="section-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <h2>Credit Cycle — India's Current Position</h2>
+      </div>
+    </div>
+    <div class="credit-wrap" id="credit-wrap"></div>
+  </div>
+</div>
+
+<!-- CORPORATE ACTIONS -->
+<div id="page-corporate" class="page">
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-hdr-left">
+        <div class="section-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg></div>
+        <h2>Corporate Actions</h2>
+      </div>
+      <span class="section-hdr-right">Next 30 days</span>
+    </div>
+    <div class="ca-wrap"><table class="ca-table" id="ca-table"></table></div>
+  </div>
+</div>
+
+<!-- DICTIONARY -->
+<div id="page-dictionary" class="page">
+  <div class="section">
+    <div class="section-hdr">
+      <div class="section-hdr-left">
+        <div class="section-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <h2>Finance Dictionary</h2>
+      </div>
+      <span class="section-hdr-right" id="dict-count"></span>
+    </div>
+    <input class="dict-search" id="dict-search" placeholder="Search a term — e.g. repo rate, FII, yield curve..." />
+    <div id="dict-grid"></div>
+  </div>
+</div>
+
+<script>
+// ── Wait for DOM ──
+document.addEventListener('DOMContentLoaded', function() {
+
+const NEWS_KEY = '62f70f53506c4108959cdf7ec09eb032';
+const PROXY = 'https://api.allorigins.win/raw?url=';
+let claudeKey = localStorage.getItem('ns_ck') || '';
+let summaryCache = {};
+let feedArticles = [];
+let newsLoaded = false;
+
+// ── API KEY ──
+function saveKey() {
+  const v = document.getElementById('claude-key').value.trim();
+  if (!v.startsWith('sk-ant')) { alert('Enter a valid Anthropic key starting with sk-ant-'); return; }
+  claudeKey = v;
+  localStorage.setItem('ns_ck', v);
+  showConnected();
+}
+window.saveKey = saveKey;
+
+function showConnected() {
+  document.getElementById('api-ui').innerHTML = '<div class="api-connected-pill">✓ AI summaries active</div><div class="api-hint" style="margin-top:5px">Click "AI Summary" on any article.</div>';
+}
+if (claudeKey) showConnected();
+
+// ── NAV TABS ──
+document.querySelectorAll('.nav-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('page-' + tab.dataset.page).classList.add('active');
+    if (tab.dataset.page === 'news' && !newsLoaded) {
+      newsLoaded = true;
+      fetchNews('india finance economy RBI SEBI');
+    }
+  });
+});
+
+// ── DATE ──
+document.getElementById('dash-date').textContent = new Date().toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+// ── NEWS ──
+function timeAgo(d) {
+  const m = Math.floor((Date.now() - new Date(d)) / 60000);
+  return m < 60 ? m + 'm ago' : m < 1440 ? Math.floor(m/60) + 'h ago' : Math.floor(m/1440) + 'd ago';
+}
+
+function getCategory(a) {
+  const t = ((a.title || '') + (a.description || '')).toLowerCase();
+  if (t.match(/sensex|nifty|bse|nse|ipo|stock|share price/)) return { label:'Stock Market', cls:'tag-c' };
+  if (t.match(/rbi|sebi|india|rupee|budget|gst|fiscal|modi/)) return { label:'Indian Finance', cls:'tag-a' };
+  if (t.match(/fed|federal reserve|wall street|s&p|dow|nasdaq|ecb/)) return { label:'Global Markets', cls:'tag-b' };
+  return { label:'World News', cls:'tag-d' };
+}
+
+async function fetchNews(q) {
+  const feed = document.getElementById('news-feed');
+  feed.innerHTML = '<div class="feed-loading"><div class="spinner"></div>Fetching live headlines...</div>';
+  summaryCache = {};
+  feedArticles = [];
+
+  const newsUrl = 'https://newsapi.org/v2/everything?q=' + encodeURIComponent(q) + '&language=en&sortBy=publishedAt&pageSize=12&apiKey=' + NEWS_KEY;
+
+  // Multiple proxies + direct attempt
+  const attempts = [
+    () => fetch('https://corsproxy.io/?' + encodeURIComponent(newsUrl)),
+    () => fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(newsUrl)),
+    () => fetch('https://thingproxy.freeboard.io/fetch/' + newsUrl),
+    () => fetch('https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(newsUrl)),
+  ];
+
+  let success = false;
+  for (let i = 0; i < attempts.length; i++) {
+    try {
+      const r = await Promise.race([
+        attempts[i](),
+        new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 8000))
+      ]);
+      if (!r.ok) continue;
+      const text = await r.text();
+      let d;
+      try { d = JSON.parse(text); } catch(e) { continue; }
+      if (!d.articles || d.articles.length === 0) continue;
+      const filtered = d.articles.filter(function(a) { return a.title && a.title !== '[Removed]' && a.url; }).slice(0, 10);
+      if (filtered.length === 0) continue;
+      feedArticles = filtered;
+      renderFeed(feedArticles);
+      success = true;
+      break;
+    } catch(e) { continue; }
+  }
+
+  if (!success) {
+    // Final fallback: use GNews (free, no CORS)
+    try {
+      const gnUrl = 'https://gnews.io/api/v4/search?q=' + encodeURIComponent(q) + '&lang=en&max=10&token=free';
+      const r = await fetch(gnUrl);
+      if (r.ok) {
+        const d = await r.json();
+        if (d.articles && d.articles.length > 0) {
+          feedArticles = d.articles.map(function(a) {
+            return { title:a.title, description:a.description, url:a.url, publishedAt:a.publishedAt, source:{ name:a.source.name } };
+          });
+          renderFeed(feedArticles);
+          success = true;
+        }
+      }
+    } catch(e) {}
+  }
+
+  if (!success) {
+    feedArticles = DEMO_ARTICLES;
+    renderFeed(DEMO_ARTICLES);
+    feed.insertAdjacentHTML('afterbegin',
+      '<div style="background:#fef9c3;border:1px solid #fde68a;border-radius:var(--radius-sm);padding:10px 14px;font-size:12px;color:var(--ink2);margin-bottom:12px;">⚠ Showing cached articles. Live news loads best when hosted on Netlify.</div>');
+  }
+}
+
+function renderFeed(articles) {
+  const feed = document.getElementById('news-feed');
+  feed.innerHTML = '';
+  articles.forEach((a, i) => {
+    const cat = getCategory(a);
+    const div = document.createElement('div');
+    div.className = 'ncard' + (i === 0 ? ' featured' : '');
+    div.innerHTML = `
+      <div class="nc-meta">
+        <span class="tag ${cat.cls}">${cat.label}</span>
+        <span class="nc-source">${a.source?.name || 'News'}</span>
+        <span class="nc-sep">·</span>
+        <span class="nc-time">${timeAgo(a.publishedAt)}</span>
+      </div>
+      <div class="nc-title">${a.title}</div>
+      <div class="nc-desc">${a.description || ''}</div>
+      <div class="nc-actions">
+        <button class="btn-ai" id="abtn-${i}" onclick="toggleSum(${i})">
+          <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          AI Summary
+        </button>
+        <a class="btn-read" href="${a.url}" target="_blank" rel="noopener">Read full article →</a>
+      </div>
+      <div class="sum-box" id="sum-${i}">
+        <div class="sum-label">NEWSPACE AI SUMMARY</div>
+        <div id="sum-text-${i}" class="sum-text"></div>
+      </div>`;
+    feed.appendChild(div);
+  });
+}
+
+async function toggleSum(i) {
+  const box = document.getElementById('sum-' + i);
+  const btn = document.getElementById('abtn-' + i);
+  const txt = document.getElementById('sum-text-' + i);
+  if (box.classList.contains('open')) {
+    box.classList.remove('open');
+    btn.innerHTML = '<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> AI Summary';
+    return;
+  }
+  box.classList.add('open');
+  btn.innerHTML = '✕ Close';
+  if (summaryCache[i]) { txt.innerHTML = summaryCache[i]; return; }
+  const a = feedArticles[i];
+  if (!claudeKey) {
+    const h = '<span>Add your free Anthropic API key above to get AI summaries.</span><div class="sum-tip"><strong>📌</strong> Get it free at <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent)">console.anthropic.com</a></div>';
+    txt.innerHTML = h; summaryCache[i] = h; return;
+  }
+  txt.innerHTML = '<span style="display:flex;align-items:center;gap:8px;color:var(--ink4)"><span class="dots-load"><span></span><span></span><span></span></span> Generating summary...</span>';
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json', 'x-api-key':claudeKey, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true' },
+      body: JSON.stringify({ model:'claude-sonnet-4-6', max_tokens:1000, messages:[{ role:'user', content:`You are NEWSPACE, a finance news summarizer for Indian students. Write 2-3 sentences: (1) what happened, (2) why it matters for India's economy or markets. Then write "📌 Student takeaway:" followed by the key finance concept this illustrates. Under 90 words total. Direct and educational.\n\nTitle: ${a.title}\nDescription: ${a.description||''}\nSource: ${a.source?.name}` }] })
+    });
+    const d = await res.json();
+    if (d.content?.[0]?.text) {
+      const p = d.content[0].text.split('📌');
+      let h = `<span>${p[0].trim()}</span>`;
+      if (p[1]) h += `<div class="sum-tip"><strong>📌 Student takeaway:</strong> ${p[1].replace('Student takeaway:','').trim()}</div>`;
+      summaryCache[i] = h; txt.innerHTML = h;
+    } else throw new Error();
+  } catch(e) {
+    txt.innerHTML = '<span style="color:var(--ink4)">Could not generate summary. Check your API key and try again.</span>';
+  }
+}
+window.toggleSum = toggleSum;
+
+document.getElementById('news-pills').addEventListener('click', e => {
+  const pill = e.target.closest('.npill');
+  if (!pill) return;
+  document.querySelectorAll('.npill').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active');
+  fetchNews(pill.dataset.q);
+});
+
+// ── SECTORS ──
+const SECTORS = [
+  { name:'Banking & Finance', pct:+0.48, news:'HDFC Bank rises 1.8% on strong deposit growth. RBI holds rates — NIM pressure eases.' },
+  { name:'Information Technology', pct:+1.21, news:'Infosys & TCS gain on rupee weakness. Strong Q4 deal wins support outlook.' },
+  { name:'Pharmaceuticals', pct:+0.72, news:'Sun Pharma hits 52-week high. US FDA approvals boost export sentiment.' },
+  { name:'FMCG', pct:-0.31, news:'HUL slips as rural demand stays muted. Raw material cost pressure persists.' },
+  { name:'Auto', pct:+0.55, news:'Maruti Suzuki up 2% on strong monthly sales. EV transition a key watch.' },
+  { name:'Energy & Oil', pct:+0.90, news:'Reliance Industries advances on OPEC+ cut extension. Oil at $78/bbl.' },
+  { name:'Real Estate', pct:-0.44, news:'High mortgage rates weigh on sector. Godrej Properties & DLF slip.' },
+  { name:'Metals & Mining', pct:+0.18, news:'Tata Steel rises on China demand recovery hopes.' },
+];
+const sg = document.getElementById('sector-grid');
+SECTORS.forEach(s => {
+  const up = s.pct >= 0;
+  
+  const bar = Math.min(Math.abs(s.pct) * 30, 100);
+  const div = document.createElement('div');
+  div.className = 'sc-card';
+  div.innerHTML = `
+    <div class="sc-top">
+      <div class="sc-name">${s.name}</div>
+      <div class="sc-pct" style="color:${up?'var(--up)':'var(--down)'}">${up?'▲':'▼'} ${s.pct>0?'+':''}${s.pct}%</div>
+    </div>
+    <div class="sc-bar-bg"><div class="sc-bar" style="width:${bar}%;background:${up?'var(--up)':'var(--down)'}"></div></div>
+    <div class="sc-news">${s.news}</div>`;
+  sg.appendChild(div);
+});
+
+// ── TRENDS ──
+const TRENDS = [
+  { icon:'📈', title:"India's Capex Supercycle", tag:'Structural', summary:'Government infrastructure spending hit ₹11 lakh crore in FY25 — roads, railways, ports, airports. Private capex is beginning to follow. This is a multi-year trend driving cement, metals, and engineering stocks.', signal:'Bullish for: Larsen & Toubro, UltraTech Cement, IRB Infra' },
+  { icon:'🌐', title:'De-dollarisation & Rupee Trade', tag:'Geopolitical', summary:"India is pushing bilateral trade in rupees with UAE, Russia, and others. The share of non-dollar trade is slowly rising. This reduces currency risk for Indian exporters over the long term.", signal:'Watch: INR strength, gold demand, forex reserves' },
+  { icon:'🤖', title:'AI & Tech Adoption in BFSI', tag:'Technology', summary:'Banks and NBFCs are rapidly deploying AI for credit scoring, fraud detection, and customer service. This is reducing NPAs and improving efficiency. Fin-tech lending is growing at 35% CAGR.', signal:'Beneficiary: HDFC Bank, Bajaj Finance, Paytm' },
+  { icon:'🛢️', title:'Oil Price Volatility Risk', tag:'Commodity', summary:"OPEC+ production cuts are keeping Brent above $78/bbl. For India (80% oil import dependent), each $10/bbl rise adds ~₹1 lakh crore to the import bill and pressures the current account deficit.", signal:'Risk for: OMCs, aviation, paint companies' },
+  { icon:'🏦', title:'Credit Growth Slowdown', tag:'Banking', summary:'RBI has been nudging banks to slow unsecured lending. Personal loan growth is slowing from 30% to ~18% YoY. Credit costs may rise for some banks in H2 FY26.', signal:'Watch: NPAs, credit cards, MFI sector' },
+  { icon:'🌾', title:'El Niño Impact on Inflation', tag:'Macro', summary:"Below-normal monsoon forecasts are raising food inflation risks. Vegetable prices have been volatile. This is a key reason RBI is delaying rate cuts — food inflation drives headline CPI.", signal:'Impact: CPI, rural demand, FMCG sector' },
+];
+const tl = document.getElementById('trends-list');
+TRENDS.forEach(t => {
+  const div = document.createElement('div');
+  div.className = 'trend-card';
+  div.innerHTML = `
+    <div class="nc-meta"><span class="tag tag-a">${t.tag}</span></div>
+    <div class="nc-title">${t.icon} ${t.title}</div>
+    <div style="font-size:13px;color:var(--ink2);line-height:1.7;margin-top:6px">${t.summary}</div>
+    <div class="trend-signal">${t.signal}</div>`;
+  tl.appendChild(div);
+});
+
+// ── MARKET CYCLE ──
+const PHASES = [ // market cycle phases
+  { ph:'Trough', cls:'ph-trough', title:'Trough — Maximum Pessimism', text:'Markets at their lowest. Bad news everywhere. Smart money quietly buying quality at deep discounts. GDP negative, unemployment high.', tags:['Negative GDP','High unemployment','P/E at lows','Wide spreads'], current:false },
+  { ph:'Expansion', cls:'ph-expand', title:'Early Expansion — Recovery Begins', text:'Economy starts recovering. Earnings improving. Interest rates still low. FII inflows pick up. Best time to buy cyclicals.', tags:['GDP turning positive','PMI above 50','FII buying','Falling yields'], current:false },
+  { ph:'Late Cycle ⭐', cls:'ph-peak', title:'Late Cycle — India is HERE', text:'Economy growing well but inflation rising. Central bank on hold. Valuations stretched. Quality over momentum. This is where discipline matters.', tags:['CPI above target','RBI on hold','High valuations','FII volatile'], current:true },
+  { ph:'Contraction', cls:'ph-contract', title:'Contraction — Slowdown Risk', text:'Growth slows, earnings disappoint. Rate cuts eventually begin. Defensive stocks outperform. Avoid leveraged companies.', tags:['GDP slowing','Rate cuts start','Defensive rally','Rising NPAs'], current:false },
+];
+const cg = document.getElementById('cycle-grid');
+PHASES.forEach(p => {
+  const div = document.createElement('div');
+  div.className = 'cyc-card' + (p.current ? ' current' : '');
+  div.innerHTML = `
+    <div class="cyc-phase ${p.cls}">${p.ph}</div>
+    <div class="cyc-title">${p.title}</div>
+    <div class="cyc-text">${p.text}</div>
+    <div class="cyc-tags">${p.tags.map(t=>`<span class="cyc-tag">${t}</span>`).join('')}</div>`;
+  cg.appendChild(div);
+});
+
+// ── CREDIT CYCLE ──
+const CREDIT_STEPS = [
+  { dot:'#3b82f6', active:false, title:'Credit Boom (2019–21)', text:'Easy money, low rates post-COVID. Lending surged. Retail credit grew 30%+ YoY. NBFCs and banks competed aggressively.' },
+  { dot:'#f59e0b', active:false, title:'Credit Tightening (2022–23)', text:'RBI raised repo rate by 250bps. Unsecured loan growth flagged. Banks raised lending standards considerably.' },
+  { dot:'#10b981', active:true,  title:'Credit Normalization — NOW', text:'Growth moderating to 14–16%. RBI watching MFI stress and unsecured credit. Quality > quantity phase.', now:true },
+  { dot:'#6366f1', active:false, title:'Credit Easing (Expected 2025–26)', text:'If inflation cools, RBI cuts rates. Credit cycle loosens. New lending cycle begins.' },
+];
+const cw = document.getElementById('credit-wrap');
+const timelineHTML = `<div><div class="credit-timeline">${CREDIT_STEPS.map(c=>`
+  <div class="ct-item${c.active?' active':''}">
+    <div class="ct-dot" style="background:${c.dot}"></div>
+    <div class="ct-title">${c.title}${c.now?'<span class="ct-now">NOW</span>':''}</div>
+    <div class="ct-text">${c.text}</div>
+  </div>`).join('')}</div></div>`;
+const infoHTML = `<div class="credit-info">
+  <h4>What to watch in a credit cycle</h4>
+  ${[
+    ['Credit-to-GDP ratio','India at 57% — room to grow vs China 200%'],
+    ['NPA (Non-Performing Assets)','Gross NPA fell to 3.2% — healthiest in a decade'],
+    ['MCLR vs Repo Rate','Banks cut MCLR only after RBI cuts repo rate'],
+    ['Credit Growth','14% YoY — slowing from 16%, still healthy'],
+    ['Corporate vs Retail','Retail leading; corporate capex just starting'],
+  ].map(([k,v])=>`<div class="ci-row"><span class="ci-key">${k}:</span> <span class="ci-val">${v}</span></div>`).join('')}
+</div>`;
+cw.innerHTML = timelineHTML + infoHTML;
+
+// ── CORPORATE ACTIONS ──
+const CA = [
+  { co:'Infosys Ltd', sym:'INFY', type:'Dividend', cls:'ca-div', detail:'₹22 per share (Final)', ex:'20 Jun 2025', date:'28 Jun 2025' },
+  { co:'Tata Motors Ltd', sym:'TATAMOTORS', type:'Bonus', cls:'ca-bonus', detail:'1:1 (1 free share per share)', ex:'30 Jun 2025', date:'05 Jul 2025' },
+  { co:'HDFC Bank Ltd', sym:'HDFCBANK', type:'Dividend', cls:'ca-div', detail:'₹19.50 per share', ex:'08 Jul 2025', date:'12 Jul 2025' },
+  { co:'Wipro Ltd', sym:'WIPRO', type:'Buyback', cls:'ca-buyback', detail:'₹500 cr at ₹560/share', ex:'—', date:'15 Jul 2025' },
+  { co:'ITC Ltd', sym:'ITC', type:'Split', cls:'ca-split', detail:'Face value ₹10 → ₹1 (10:1)', ex:'14 Jul 2025', date:'20 Jul 2025' },
+  { co:'Reliance Industries', sym:'RELIANCE', type:'Rights', cls:'ca-rights', detail:'1 share per 15 at ₹2,800', ex:'18 Jul 2025', date:'25 Jul 2025' },
+  { co:'Asian Paints Ltd', sym:'ASIANPAINT', type:'Dividend', cls:'ca-div', detail:'₹5.25 per share (Interim)', ex:'25 Jul 2025', date:'02 Aug 2025' },
+  { co:'Bajaj Finance Ltd', sym:'BAJFINANCE', type:'Dividend', cls:'ca-div', detail:'₹44 per share (Final)', ex:'04 Aug 2025', date:'10 Aug 2025' },
+];
+document.getElementById('ca-table').innerHTML = `
+  <thead><tr><th>Company</th><th>Action</th><th>Details</th><th>Ex-Date</th><th>Record/Payment Date</th></tr></thead>
+  <tbody>${CA.map(r=>`<tr>
+    <td><div class="ca-co">${r.co}</div><div class="ca-sym">${r.sym}</div></td>
+    <td><span class="ca-badge ${r.cls}">${r.type}</span></td>
+    <td>${r.detail}</td><td>${r.ex}</td><td>${r.date}</td>
+  </tr>`).join('')}</tbody>`;
+
+// ── DICTIONARY ──
+const DICT = [
+  { word:'Repo Rate', cat:'Monetary Policy', simple:'The rate at which RBI lends money to banks overnight.', full:'The Repo Rate is the rate at which the Reserve Bank of India lends short-term funds to commercial banks against government securities. When RBI wants to reduce inflation, it raises the repo rate — making borrowing costlier. When it wants to boost growth, it cuts the rate.', ex:'RBI repo rate is 6.5%. A bank borrows ₹1,000 crore overnight and repays ₹1,000.18 crore the next day.' },
+  { word:'GIFT Nifty', cat:'Markets', simple:'Pre-market indicator that signals how Nifty will open each day.', full:'GIFT Nifty trades on NSE International Exchange in GIFT City, Gujarat — 21 hours a day, before Indian markets open at 9:15 AM. If GIFT Nifty is up 100 points, Nifty 50 is expected to open ~100 points higher.', ex:'GIFT Nifty up 150 pts at 8 AM → Nifty expected to open gap-up at ~22,650.' },
+  { word:'FII / FPI', cat:'Markets', simple:'Foreign investors buying and selling Indian stocks and bonds.', full:'Foreign Institutional Investors (FII) or Foreign Portfolio Investors (FPI) are overseas entities — pension funds, hedge funds, sovereign wealth funds — that invest in Indian securities. Their buying pushes markets up; their selling causes corrections.', ex:'US Fed hints at rate cuts → FIIs move money to India → Sensex rises 400 points.' },
+  { word:'Yield Curve', cat:'Fixed Income', simple:'A graph of interest rates at different time horizons. Normally slopes upward.', full:'The yield curve plots bond yields from 1 month to 30 years. A normal curve slopes upward (longer = higher rate). An inverted curve (short rates > long rates) is a classic recession warning signal.', ex:'2-year G-Sec yields 7.2% but 10-year yields 7.0% — inverted curve, a warning sign.' },
+  { word:'NPA / Bad Loans', cat:'Banking', simple:"Loans where the borrower stopped repaying — the bank’s bad debt.", full:"An NPA (Non-Performing Asset) is a loan where the borrower hasn’t paid interest or principal for 90+ days. High NPAs mean the bank’s money is stuck. India’s banking sector cleaned NPAs from 11% in 2018 to ~3.2% now.", ex:'A company borrowed ₹100 cr from SBI, misses 3 EMIs → becomes NPA → SBI must provision for it.' },
+  { word:'P/E Ratio', cat:'Equity Valuation', simple:'Share price ÷ earnings per share. Tells you how expensive a stock is.', full:'Price-to-Earnings Ratio = Market Price ÷ EPS. High P/E means investors expect strong future growth. Nifty 50 trades at ~22x P/E historically. Above 25 is expensive; below 15 is cheap.', ex:'Infosys earns ₹60 EPS, trades at ₹1,500. P/E = 25x. Investors pay ₹25 for every ₹1 of profit.' },
+  { word:'CPI vs WPI', cat:'Macroeconomics', simple:'CPI = what you pay. WPI = what factories pay. RBI targets CPI at 4%.', full:'CPI (Consumer Price Index) tracks price changes for household goods. WPI (Wholesale Price Index) tracks factory-level prices. RBI sets monetary policy based on CPI, targeting 4% (±2%).', ex:'Tomato prices spike → CPI food inflation jumps → RBI delays rate cut.' },
+  { word:'Current Account Deficit', cat:'Macroeconomics', simple:"India importing more than it exports — like a country's credit card bill.", full:"India’s Current Account records all transactions with the world. A deficit means imports exceed exports. India must fund the gap through FII/FDI inflows. High oil prices widen CAD since India imports 80% of its oil.", ex:"Oil at $100/bbl → India’s import bill rises ₹1 lakh crore → CAD widens → Rupee depreciates." },
+  { word:'MCLR', cat:'Banking', simple:"The minimum rate below which banks cannot lend to you.", full:"Marginal Cost of Funds-based Lending Rate is the floor for bank lending rates. When RBI cuts the repo rate, MCLR doesn’t fall immediately — there’s a 3–12 month lag. Your home loan EMI is linked to 1-year MCLR.", ex:"RBI cuts repo by 0.25% → SBI's MCLR falls 0.15–0.20% after 3–6 months → your EMI reduces." },
+  { word:'EBITDA', cat:'Corporate Finance', simple:"A company's profit before interest, taxes, and accounting adjustments.", full:"EBITDA = Earnings Before Interest, Taxes, Depreciation & Amortization. Measures core operating performance, stripping out financing and accounting choices. EBITDA margin = EBITDA ÷ Revenue.", ex:'Zomato Revenue ₹3,000 cr. EBITDA ₹300 cr. EBITDA Margin = 10% — better than last year’s −5%.' },
+  { word:'QIP', cat:'Capital Markets', simple:"A fast way for companies to raise money from big institutions without a public issue.", full:"Qualified Institutional Placement lets listed companies issue fresh shares exclusively to QIBs (mutual funds, FIIs, insurance cos). Faster than FPO — no SEBI approval needed. Shares issued at a discount to market.", ex:'HDFC Bank raised ₹15,000 cr via QIP at ₹1,700/share vs market price ₹1,750 to fund loan growth.' },
+  { word:'Dividend Yield', cat:'Equity', simple:"Annual dividend as % of share price — your cash return from holding a stock.", full:"Dividend Yield = Annual Dividend ÷ Share Price × 100. Tells you the income return ignoring price appreciation. PSU companies (Coal India, Power Grid) are known for high dividend yields.", ex:'Coal India pays ₹24 dividend. Share price ₹480. Dividend yield = 5% — better than a savings account.' },
+];
+
+function renderDict(filter) {
+  const filtered = filter ? DICT.filter(d =>
+    d.word.toLowerCase().includes(filter) ||
+    d.cat.toLowerCase().includes(filter) ||
+    d.simple.toLowerCase().includes(filter)
+  ) : DICT;
+  document.getElementById('dict-count').textContent = filtered.length + ' terms';
+  document.getElementById('dict-grid').innerHTML = filtered.length
+    ? filtered.map((d, i) => `
+        <div class="dc-card" onclick="this.classList.toggle('open')">
+          <div class="dc-top">
+            <div class="dc-word">${d.word}</div>
+            <span class="dc-cat">${d.cat}</span>
+          </div>
+          <div class="dc-simple">${d.simple}</div>
+          <div class="dc-detail">
+            <div class="dc-full">${d.full}</div>
+            <div class="dc-example"><strong>Example:</strong> ${d.ex}</div>
+          </div>
+        </div>`).join('')
+    : `<div style="text-align:center;padding:2rem;color:var(--ink4)">No results for "<strong>${filter}</strong>"</div>`;
+}
+
+document.getElementById('dict-search').addEventListener('input', e => renderDict(e.target.value.toLowerCase().trim()));
+renderDict('');
+
+// ── DEMO FALLBACK ──
+const DEMO_ARTICLES = [
+  { title:'RBI Holds Repo Rate at 6.5% for Fifth Straight Meeting', description:'The MPC voted 5-1 to keep rates unchanged citing sticky food inflation and global uncertainty around US Fed moves.', source:{name:'Economic Times'}, publishedAt:new Date(Date.now()-7200000).toISOString(), url:'https://economictimes.indiatimes.com' },
+  { title:'Sensex Surges 400 Points as FII Inflows Return After 3-Week Selloff', description:'Foreign institutional investors pumped ₹3,200 crore into Indian equities as a weakening US dollar made emerging markets attractive.', source:{name:'Mint'}, publishedAt:new Date(Date.now()-10800000).toISOString(), url:'https://livemint.com' },
+  { title:'US Federal Reserve Signals Only 2 Rate Cuts in 2025', description:"Jerome Powell's hawkish tone at the FOMC meeting sent global bond yields higher and pressured equities worldwide.", source:{name:'Bloomberg'}, publishedAt:new Date(Date.now()-18000000).toISOString(), url:'https://bloomberg.com' },
+  { title:'SEBI Tightens F&O Rules After 90% of Retail Traders Lost Money', description:'New regulations raise minimum contract sizes and upfront margin requirements for futures and options trading.', source:{name:'Financial Express'}, publishedAt:new Date(Date.now()-25200000).toISOString(), url:'https://financialexpress.com' },
+  { title:"India's GDP Growth Upgraded to 7.2% — Fastest Major Economy Again", description:'IMF and World Bank raised forecasts citing strong private consumption, government capex, and a booming services sector.', source:{name:'Business Standard'}, publishedAt:new Date(Date.now()-36000000).toISOString(), url:'https://business-standard.com' },
+  { title:'OPEC+ Extends Production Cuts — Oil Hits $78/Barrel', description:'Saudi Arabia and Russia extended voluntary output cuts of 1.3 million bpd through December, raising global oil prices.', source:{name:'Reuters'}, publishedAt:new Date(Date.now()-43200000).toISOString(), url:'https://reuters.com' },
+];
+
+
+// ════════════════════════════════════════
+// PERSONALISATION — Name + Interests
+// ════════════════════════════════════════
+const PROFILE_KEY = 'ns_profile';
+
+function loadProfile() {
+  try { return JSON.parse(localStorage.getItem(PROFILE_KEY)) || null; }
+  catch(e) { return null; }
+}
+
+function saveProfile() {
+  const name = document.getElementById('modal-name').value.trim();
+  const chips = document.querySelectorAll('.interest-chip.selected');
+  if (!name || chips.length === 0) return;
+
+  const interests = Array.from(chips).map(c => ({
+    topic: c.dataset.topic,
+    label: c.dataset.label
+  }));
+
+  const profile = { name, interests };
+  localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+  document.getElementById('modal-overlay').classList.add('hidden');
+  applyProfile(profile);
+
+  // Auto-load news based on interests
+  const combinedQuery = interests.map(i => i.topic).join(' ');
+  if (document.getElementById('page-news').classList.contains('active')) {
+    fetchNews(combinedQuery);
+  }
+}
+window.saveProfile = saveProfile;
+
+function applyProfile(profile) {
+  if (!profile) return;
+
+  // ── Greeting ──
+  const dashSection = document.querySelector('#page-dashboard .section');
+  if (dashSection) {
+    // Remove old greeting if exists
+    const old = document.getElementById('user-greeting-block');
+    if (old) old.remove();
+
+    const greetBlock = document.createElement('div');
+    greetBlock.id = 'user-greeting-block';
+    greetBlock.className = 'user-greeting';
+    greetBlock.innerHTML = `
+      <div class="greeting-text">Welcome back, <span>${profile.name}</span> 👋</div>
+      <div class="greeting-edit" onclick="resetProfile()">
+        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Edit profile
+      </div>
+    `;
+    dashSection.insertBefore(greetBlock, dashSection.firstChild);
+  }
+
+  // ── Interests bar on news page ──
+  const newsSection = document.querySelector('#page-news .section');
+  if (newsSection) {
+    const old = document.getElementById('interests-bar-block');
+    if (old) old.remove();
+
+    const bar = document.createElement('div');
+    bar.id = 'interests-bar-block';
+    bar.className = 'interests-bar';
+    bar.innerHTML = `
+      <span class="interests-bar-label">Your feed:</span>
+      ${profile.interests.map(i => `<span class="interest-tag">${i.label}</span>`).join('')}
+      <span class="interests-change" onclick="resetProfile()">Change interests</span>
+    `;
+    newsSection.insertBefore(bar, newsSection.firstChild);
+  }
+
+  // ── Update news pill active state ──
+  const combinedQuery = profile.interests.map(i => i.topic).join(' ');
+  document.querySelectorAll('.npill').forEach(p => p.classList.remove('active'));
+  // Mark "All Finance" pill as active by default
+  const firstPill = document.querySelector('.npill');
+  if (firstPill) firstPill.classList.add('active');
+}
+
+function resetProfile() {
+  localStorage.removeItem(PROFILE_KEY);
+  location.reload();
+}
+window.resetProfile = resetProfile;
+
+// ── Modal chip toggle ──
+document.querySelectorAll('.interest-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    chip.classList.toggle('selected');
+    validateModal();
+  });
+});
+
+document.getElementById('modal-name').addEventListener('input', validateModal);
+
+function validateModal() {
+  const name = document.getElementById('modal-name').value.trim();
+  const selected = document.querySelectorAll('.interest-chip.selected').length;
+  document.getElementById('modal-btn').disabled = !(name.length > 0 && selected > 0);
+}
+
+// ── Init: show modal or apply saved profile ──
+const savedProfile = loadProfile();
+if (savedProfile) {
+  document.getElementById('modal-overlay').classList.add('hidden');
+  applyProfile(savedProfile);
+} else {
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+
+// ── When news tab opened, load personalized feed ──
+const origNavHandler = document.querySelectorAll('.nav-tab');
+origNavHandler.forEach(tab => {
+  tab.addEventListener('click', () => {
+    if (tab.dataset.page === 'news' && !newsLoaded) {
+      newsLoaded = true;
+      const profile = loadProfile();
+      if (profile && profile.interests.length > 0) {
+        const q = profile.interests.map(i => i.topic).join(' ');
+        fetchNews(q);
+      } else {
+        fetchNews('india finance economy RBI SEBI');
+      }
+    }
+  });
+});
+
+
+// ════════════════════════════════════════
+// LIVE MARKET DATA — Updates every 15 seconds
+// Uses Yahoo Finance via CORS proxy
+// ════════════════════════════════════════
+
+const LIVE_SYMBOLS = {
+  SENSEX:    '^BSESN',
+  NIFTY:     '^NSEI',
+  BANKNIFTY: '^NSEBANK',
+  NIFTYIT:   '^CNXIT',
+  USDINR:    'INR=X',
+  BTC:       'BTC-USD',
+  GIFTNIFTY: '^NSEI', // best proxy for GIFT Nifty
+};
+
+const YF_PROXY = 'https://corsproxy.io/?';
+
+async function fetchLiveQuote(symbol) {
+  try {
+    const url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(symbol) + '?interval=1m&range=1d';
+    const r = await fetch(YF_PROXY + encodeURIComponent(url), {
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!r.ok) throw new Error('bad response');
+    const d = await r.json();
+    const meta = d.chart.result[0].meta;
+    const price  = meta.regularMarketPrice || 0;
+    const prev   = meta.previousClose || meta.chartPreviousClose || price;
+    const change = price - prev;
+    const pct    = prev ? (change / prev * 100) : 0;
+    return { price, change, pct };
+  } catch(e) {
+    return null;
+  }
+}
+
+function fmtNum(n, dec=2) {
+  if (n >= 10000) return n.toLocaleString('en-IN', { maximumFractionDigits: dec });
+  return n.toFixed(dec);
+}
+
+function updateCard(id, price, change, pct, prefix='', dec=2) {
+  const valEl  = document.getElementById('mv-' + id);
+  const chgEl  = document.getElementById('mc2-' + id);
+  const barEl  = document.getElementById('mb-' + id);
+  const cardEl = document.getElementById('mc-' + id);
+  if (!valEl) return;
+
+  const up = pct >= 0;
+  const ar = up ? '▲' : '▼';
+  const barW = Math.min(Math.abs(pct) * 20, 100);
+
+  valEl.textContent = prefix + fmtNum(price, dec);
+  chgEl.textContent = ar + ' ' + fmtNum(Math.abs(change), dec) + ' (' + (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%)';
+  chgEl.className = 'mcard-chg ' + (up ? 'chg-up' : 'chg-dn');
+  barEl.style.width = barW + '%';
+  barEl.className = 'mcard-fill ' + (up ? 'fill-up' : 'fill-dn');
+}
+
+function updateGiftNifty(price, change, pct) {
+  const valEl = document.getElementById('gift-val');
+  const chgEl = document.getElementById('gift-chg');
+  const subEl = document.getElementById('gift-sub');
+  if (!valEl) return;
+
+  const up = pct >= 0;
+  valEl.textContent = price.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+  chgEl.textContent = (up ? '▲' : '▼') + ' ' + Math.abs(change).toFixed(2) + ' pts (' + (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%)';
+  chgEl.style.color = up ? '#6ee7b7' : '#fca5a5';
+  const lo = Math.round(price - 30);
+  const hi = Math.round(price + 30);
+  subEl.textContent = 'Suggests Nifty opens ~' + lo.toLocaleString('en-IN') + '–' + hi.toLocaleString('en-IN');
+}
+
+function updateTicker(data) {
+  const inner = document.querySelector('.ticker-inner');
+  if (!inner) return;
+
+  const items = Object.entries(data).map(([key, v]) => {
+    if (!v) return '';
+    const up = v.pct >= 0;
+    const cls = up ? 't-up' : 't-dn';
+    const ar  = up ? '▲' : '▼';
+    const labels = { SENSEX:'SENSEX', NIFTY:'NIFTY 50', BANKNIFTY:'NIFTY BANK', NIFTYIT:'NIFTY IT', USDINR:'USD/INR', BTC:'BITCOIN', GIFTNIFTY:'GIFT NIFTY' };
+    const prefixes = { USDINR:'₹', BTC:'$' };
+    const prefix = prefixes[key] || '';
+    const dec = (key === 'SENSEX' || key === 'BTC') ? 0 : 2;
+    return '<span class="t-item"><span class="t-name">' + labels[key] + '</span><span class="' + cls + '">' + ar + ' ' + prefix + fmtNum(v.price, dec) + ' (' + (v.pct >= 0 ? '+' : '') + v.pct.toFixed(2) + '%)</span></span>';
+  }).filter(Boolean);
+
+  // duplicate for infinite scroll
+  const combined = items.join('') + items.join('');
+  inner.innerHTML = combined;
+}
+
+async function refreshAllLive() {
+  const results = {};
+  // Fetch all in parallel
+  const entries = Object.entries(LIVE_SYMBOLS);
+  const fetched = await Promise.all(entries.map(([key, sym]) => fetchLiveQuote(sym)));
+
+  entries.forEach(([key], i) => {
+    if (fetched[i]) results[key] = fetched[i];
+  });
+
+  // Update market cards
+  if (results.SENSEX)    updateCard('SENSEX',    results.SENSEX.price,    results.SENSEX.change,    results.SENSEX.pct,    '', 0);
+  if (results.NIFTY)     updateCard('NIFTY',     results.NIFTY.price,     results.NIFTY.change,     results.NIFTY.pct,     '', 2);
+  if (results.BANKNIFTY) updateCard('BANKNIFTY', results.BANKNIFTY.price, results.BANKNIFTY.change, results.BANKNIFTY.pct, '', 2);
+  if (results.NIFTYIT)   updateCard('NIFTYIT',   results.NIFTYIT.price,   results.NIFTYIT.change,   results.NIFTYIT.pct,   '', 2);
+  if (results.USDINR)    updateCard('USDINR',    results.USDINR.price,    results.USDINR.change,    results.USDINR.pct,    '₹', 2);
+  if (results.BTC)       updateCard('BTC',       results.BTC.price,       results.BTC.change,       results.BTC.pct,       '$', 0);
+
+  // Update GIFT Nifty (use NIFTY as proxy + small premium)
+  const gn = results.GIFTNIFTY || results.NIFTY;
+  if (gn) {
+    const gnPrice = gn.price + 25; // GIFT Nifty trades at slight premium
+    updateGiftNifty(gnPrice, gn.change, gn.pct);
+  }
+
+  // Update ticker
+  if (Object.keys(results).length > 0) updateTicker(results);
+
+  // Update last refreshed time
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+  const eyebrow = document.querySelector('.gift-eyebrow');
+  if (eyebrow) eyebrow.textContent = 'Live · Last updated ' + timeStr;
+}
+
+// Run immediately then every 15 seconds
+refreshAllLive();
+setInterval(refreshAllLive, 15000);
+
+}); // end DOMContentLoaded
+</script>
+
+<footer style="background:#09090b;color:rgba(255,255,255,0.35);padding:2rem 1.5rem;margin-top:2rem;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-bottom:1.25rem;border-bottom:1px solid rgba(255,255,255,0.08);">
+      <div>
+        <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.5px;margin-bottom:3px;">NEWSPACE</div>
+        <div style="font-size:12px;">Every News Simplified &amp; Summarized</div>
+      </div>
+      <div style="display:flex;gap:1.5rem;font-size:12px;">
+        <span>News Feed</span>
+        <span>Sectors</span>
+        <span>Dictionary</span>
+        <span>Market Cycles</span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-top:1.25rem;">
+      <div style="font-size:12px;">
+        AI summaries are for educational purposes only. Always verify before making financial decisions.
+      </div>
+      <div style="font-size:12px;display:flex;align-items:center;gap:6px;">
+        Designed &amp; built by
+        <span style="color:#93c5fd;font-weight:600;font-size:13px;">Sarthak Hiwale</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ONBOARDING MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-logo">· NEWSPACE</div>
+    <div class="modal-sub">Personalise your experience in 30 seconds</div>
+
+    <div class="modal-label">What is your name?</div>
+    <input class="modal-input" id="modal-name" type="text" placeholder="e.g. Sarthak" maxlength="30" />
+
+    <div class="modal-label">What topics interest you? (pick at least one)</div>
+    <div class="interest-grid">
+      <div class="interest-chip" data-topic="india finance economy RBI SEBI" data-label="Indian Economy"><span class="chip-icon">🇮🇳</span>Indian Economy</div>
+      <div class="interest-chip" data-topic="sensex nifty stock market BSE NSE IPO" data-label="Stock Market"><span class="chip-icon">📈</span>Stock Market</div>
+      <div class="interest-chip" data-topic="federal reserve global markets dollar bonds" data-label="Global Markets"><span class="chip-icon">🌐</span>Global Markets</div>
+      <div class="interest-chip" data-topic="RBI banking NBFC credit NPA loans" data-label="Banking"><span class="chip-icon">🏦</span>Banking</div>
+      <div class="interest-chip" data-topic="startup venture capital funding IPO tech" data-label="Startups & VC"><span class="chip-icon">🚀</span>Startups & VC</div>
+      <div class="interest-chip" data-topic="oil commodity gold crude inflation" data-label="Commodities"><span class="chip-icon">🛢️</span>Commodities</div>
+      <div class="interest-chip" data-topic="world trade geopolitics war sanctions" data-label="World News"><span class="chip-icon">🗞️</span>World News</div>
+      <div class="interest-chip" data-topic="cryptocurrency bitcoin ethereum blockchain" data-label="Crypto"><span class="chip-icon">₿</span>Crypto</div>
+    </div>
+
+    <button class="modal-btn" id="modal-btn" disabled onclick="saveProfile()">Get Started →</button>
+  </div>
+</div>
+
+</body>
+</html>
