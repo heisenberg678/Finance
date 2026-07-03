@@ -184,7 +184,10 @@ gift_html = f'''<div class="gift-card">
 # INJECT INTO index.html
 # ─────────────────────────────────────────
 print("[NEWSPACE] Reading index.html...")
-with open("../index.html", "r", encoding="utf-8") as f:
+import os
+script_dir = os.path.dirname(os.path.abspath(__file__))
+index_path = os.path.join(script_dir, '..', 'index.html')
+with open(index_path, "r", encoding="utf-8") as f:
     html = f.read()
 
 # Date
