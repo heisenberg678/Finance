@@ -184,7 +184,7 @@ gift_html = f'''<div class="gift-card">
 # INJECT INTO index.html
 # ─────────────────────────────────────────
 print("[NEWSPACE] Reading index.html...")
-with open("index.html", "r", encoding="utf-8") as f:
+with open("../index.html", "r", encoding="utf-8") as f:
     html = f.read()
 
 # Date
@@ -216,7 +216,7 @@ html = re.sub(
 )
 
 print("[NEWSPACE] Writing updated index.html...")
-with open("index.html", "w", encoding="utf-8") as f:
+with open("../index.html", "w", encoding="utf-8") as f:
     f.write(html)
 
 print(f"[NEWSPACE] ✅ All done! Site updated at {updated_str}")
