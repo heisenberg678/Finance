@@ -32,42 +32,53 @@ def extract_text_from_pdf(pdf_bytes):
 
 
 def summarize_newspaper(text, newspaper_name):
+    # Keep text short to avoid 400 error
+    short_text = text[:4000]
+
     url = "https://api.groq.com/openai/v1/chat/completions"
     headers = {
         "Authorization": f"Bearer {GROQ_API_KEY}",
         "Content-Type": "application/json"
     }
-    prompt = f"""You are NEWSPACE, a finance news summarizer for Indian students.
 
-From the newspaper text below find TOP 5 finance/economy/market stories.
-Return ONLY a valid JSON array with exactly 5 objects like this:
-[
-  {{
-    "title": "Short headline max 12 words",
-    "category": "Indian Finance",
-    "summary": "2-3 sentences what happened and why it matters for India.",
-    "takeaway": "One key finance concept this story illustrates.",
-    "source": "{newspaper_name}"
-  }}
-]
+    prompt = f"""Read this newspaper text and find 5 important finance stories.
+Return ONLY a JSON array with 5 objects. Each object must have:
+- title (max 10 words)
+- category (one of: Indian Finance, Stock Market, Global Markets, World News, Banking)
+- summary (2 sentences max)
+- takeaway (1 sentence finance lesson)
+- source (use "{newspaper_name}")
 
-category must be one of: Indian Finance, Stock Market, Global Markets, World News, Banking, Economy
-Return ONLY the JSON array. No extra text. No markdown. No backticks.
+JSON array only. No other text.
 
-NEWSPAPER TEXT:
-{text[:8000]}"""
+TEXT:
+{short_text}"""
 
     payload = {
         "model": "llama3-8b-8192",
-        "messages": [{"role": "user", "content": prompt}],
-        "max_tokens": 2000,
+        "messages": [
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ],
+        "max_tokens": 1500,
         "temperature": 0.3
     }
 
     r = requests.post(url, headers=headers, json=payload, timeout=30)
-    r.raise_for_status()
+
+    if r.status_code != 200:
+        raise Exception(f"Groq error {r.status_code}: {r.text[:200]}")
+
     raw = r.json()["choices"][0]["message"]["content"].strip()
     raw = re.sub(r"```json|```", "", raw).strip()
+
+    # Find JSON array in response
+    match = re.search(r'\[.*\]', raw, re.DOTALL)
+    if match:
+        raw = match.group()
+
     return json.loads(raw)[:5]
 
 
@@ -101,7 +112,7 @@ def update_github_site(articles):
         "Economy":         ("#dcfce7", "#15803d"),
     }
 
-    cards = f'<!-- AUTO:BOT_ARTICLES_START -->\n'
+    cards = "<!-- AUTO:BOT_ARTICLES_START -->\n"
     cards += f'<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 14px;font-size:12px;color:#166534;margin-bottom:12px;">✅ Updated from newspaper · {now}</div>\n'
 
     for i, art in enumerate(articles):
@@ -113,9 +124,9 @@ def update_github_site(articles):
         cards += f'  <div class="nc-title">{art.get("title","")}</div>\n'
         cards += f'  <div class="nc-desc">{art.get("summary","")}</div>\n'
         cards += f'  <div style="margin-top:8px;padding:8px 10px;background:#eff6ff;border-radius:6px;font-size:12px;color:#1d4ed8;">📌 {art.get("takeaway","")}</div>\n'
-        cards += f'</div>\n'
+        cards += "</div>\n"
 
-    cards += '<!-- AUTO:BOT_ARTICLES_END -->'
+    cards += "<!-- AUTO:BOT_ARTICLES_END -->"
 
     if "AUTO:BOT_ARTICLES_START" in html:
         html = re.sub(
@@ -153,7 +164,10 @@ async def handle_pdf(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         return
 
     newspaper_name = doc.file_name.replace(".pdf", "").replace("_", " ").replace("-", " ").title()
-    msg = await update.message.reply_text(f"📰 Received *{newspaper_name}*\nExtracting text...", parse_mode="Markdown")
+    msg = await update.message.reply_text(
+        f"📰 Received *{newspaper_name}*\nExtracting text...",
+        parse_mode="Markdown"
+    )
 
     try:
         file = await ctx.bot.get_file(doc.file_id)
@@ -167,10 +181,16 @@ async def handle_pdf(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 
     try:
         text = extract_text_from_pdf(pdf_bytes)
-        if len(text) < 200:
-            await msg.edit_text("⚠️ Could not extract text. Please use a text-based PDF not a scanned image.")
+        if len(text) < 100:
+            await msg.edit_text(
+                "⚠️ Could not extract text.\n"
+                "Use a text-based PDF not a scanned image."
+            )
             return
-        await msg.edit_text(f"✅ Extracted {len(text):,} characters\n🤖 Summarizing with AI...")
+        await msg.edit_text(
+            f"✅ Extracted {len(text):,} characters\n"
+            f"🤖 Summarizing with AI..."
+        )
     except Exception as e:
         await msg.edit_text(f"❌ PDF extraction failed: {e}")
         return
@@ -197,11 +217,14 @@ async def handle_pdf(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         m2 = await update.message.reply_text("🌐 Updating NEWSPACE website...")
         success = update_github_site(todays_summaries)
         if success:
-            await m2.edit_text("✅ *NEWSPACE website updated!* Refreshes in ~60 seconds.", parse_mode="Markdown")
+            await m2.edit_text(
+                "✅ *NEWSPACE updated!* Refreshes in ~60 seconds.",
+                parse_mode="Markdown"
+            )
         else:
-            await m2.edit_text("⚠️ Summaries done but site update failed. Check GITHUB_TOKEN.")
+            await m2.edit_text("⚠️ Summaries done but site update failed.")
     else:
-        await update.message.reply_text("📋 Done! Set GITHUB_TOKEN env var to also update your website.")
+        await update.message.reply_text("📋 Done!")
 
 
 async def status(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
@@ -235,4 +258,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
