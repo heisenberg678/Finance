@@ -230,7 +230,7 @@ def main():
     app.add_handler(CommandHandler("clear",  clear_cmd))
     app.add_handler(MessageHandler(filters.Document.PDF, handle_pdf))
     print("[NEWSPACE Bot] Running!")
-    app.run_polling(allowed_updates=Update.ALL_TYPES)
+    app.run_polling(drop_pending_updates=True)
 
 
 if __name__ == "__main__":
