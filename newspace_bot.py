@@ -47,7 +47,7 @@ def extract_text_from_pdf(pdf_bytes: bytes) -> str:
 # ────────────────────────────────────────────────────────────────────────────
 
 def summarize_newspaper(text: str, newspaper_name: str) -> list:
-    client = Groq(api_key=GROQ_API_KEY)
+  client = Groq(api_key=GROQ_API_KEY, http_client=None)  
 
     prompt = f"""You are NEWSPACE, a finance news summarizer for Indian finance students.
 
