@@ -433,38 +433,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
     <!-- NEWSPAPER SUMMARIES -->
     <div id="bot-articles-wrapper">
       <!-- AUTO:BOT_ARTICLES_START -->
-<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 14px;font-size:12px;color:#166534;margin-bottom:12px;">✅ Live from newspaper · 08 Jul 2026, 02:07 PM IST</div>
-<div class="ncard featured">
-<div class="nc-meta"><span class="tag" style="background:#dbeafe;color:#1d4ed8">Indian Finance</span><span class="nc-source">Fe   Mumbai    08 07 2026 Tr</span><span class="nc-sep">·</span><span class="nc-time">Today</span></div>
-<div class="nc-title">Indian Finance</div>
-<div class="nc-desc">The Indian government has announced a new stimulus package to boost the economy. The package includes measures to increase spending on infrastructure and social welfare programs.</div>
-<div style="margin-top:8px;padding:8px 10px;background:#eff6ff;border-radius:6px;font-size:12px;color:#1d4ed8;">📌 Government stimulus packages can provide a temporary boost to the economy, but they may not address underlying structural issues.</div>
-</div>
-<div class="ncard ">
-<div class="nc-meta"><span class="tag" style="background:#dcfce7;color:#15803d">Stock Market</span><span class="nc-source">Fe   Mumbai    08 07 2026 Tr</span><span class="nc-sep">·</span><span class="nc-time">Today</span></div>
-<div class="nc-title">Stock Market</div>
-<div class="nc-desc">The Sensex and Nifty indices have declined sharply in recent days due to concerns over the global economic slowdown. Investors are advised to exercise caution and diversify their portfolios.</div>
-<div style="margin-top:8px;padding:8px 10px;background:#eff6ff;border-radius:6px;font-size:12px;color:#1d4ed8;">📌 Diversification is key to managing risk in the stock market, especially during times of economic uncertainty.</div>
-</div>
-<div class="ncard ">
-<div class="nc-meta"><span class="tag" style="background:#ede9fe;color:#6d28d9">Global Markets</span><span class="nc-source">Fe   Mumbai    08 07 2026 Tr</span><span class="nc-sep">·</span><span class="nc-time">Today</span></div>
-<div class="nc-title">Global Markets</div>
-<div class="nc-desc">The global economic slowdown has led to a decline in trade and investment. The International Monetary Fund has revised its growth forecast downwards.</div>
-<div style="margin-top:8px;padding:8px 10px;background:#eff6ff;border-radius:6px;font-size:12px;color:#1d4ed8;">📌 Global economic trends can have a significant impact on local economies, and businesses should be prepared to adapt to changing market conditions.</div>
-</div>
-<div class="ncard ">
-<div class="nc-meta"><span class="tag" style="background:#dbeafe;color:#1d4ed8">Banking</span><span class="nc-source">Fe   Mumbai    08 07 2026 Tr</span><span class="nc-sep">·</span><span class="nc-time">Today</span></div>
-<div class="nc-title">Banking</div>
-<div class="nc-desc">The Reserve Bank of India has announced new regulations to improve the stability of the banking system. The regulations include stricter capital requirements and risk management standards.</div>
-<div style="margin-top:8px;padding:8px 10px;background:#eff6ff;border-radius:6px;font-size:12px;color:#1d4ed8;">📌 Regulatory frameworks play a crucial role in maintaining the stability of the banking system, and banks must comply with these regulations to ensure their survival.</div>
-</div>
-<div class="ncard ">
-<div class="nc-meta"><span class="tag" style="background:#fef9c3;color:#a16207">World News</span><span class="nc-source">Fe   Mumbai    08 07 2026 Tr</span><span class="nc-sep">·</span><span class="nc-time">Today</span></div>
-<div class="nc-title">World News</div>
-<div class="nc-desc">The global economic slowdown has led to a rise in protectionism and trade tensions. The World Trade Organization has warned of the potential consequences of a trade war.</div>
-<div style="margin-top:8px;padding:8px 10px;background:#eff6ff;border-radius:6px;font-size:12px;color:#1d4ed8;">📌 Protectionism and trade tensions can have far-reaching consequences for the global economy, and countries must work together to find solutions to these challenges.</div>
-</div>
-<!-- AUTO:BOT_ARTICLES_END -->
+      <!-- AUTO:BOT_ARTICLES_END -->
     </div>
     <div style="display:flex;align-items:center;gap:10px;margin:1rem 0;">
       <div style="flex:1;height:1px;background:var(--border)"></div>
@@ -763,16 +732,12 @@ async function toggleSum(i) {
     return;
   }
   box.classList.add('open');
-  btn.innerHTML = '✕ Close';
+  btn.innerHTML = 'X Close';
   if (summaryCache[i]) { txt.innerHTML = summaryCache[i]; return; }
   const a = feedArticles[i];
-  if (!claudeKey) {
-    const h = '<span>Add your free Anthropic API key above to get AI summaries.</span><div class="sum-tip"><strong>📌</strong> Get it free at <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent)">console.anthropic.com</a></div>';
-    txt.innerHTML = h; summaryCache[i] = h; return;
-  }
-  txt.innerHTML = '<span style="display:flex;align-items:center;gap:8px;color:var(--ink4)"><span class="dots-load"><span></span><span></span><span></span></span> Generating summary...</span>';
+  const context = 'Title: ' + a.title + '\nDescription: ' + (a.description || '') + '\nSource: ' + (a.source ? a.source.name : '');
+  txt.innerHTML = '<span style="display:flex;align-items:center;gap:8px;color:var(--ink4)"><span class="dots-load"><span></span><span></span><span></span></span> Generating...</span>';
   try {
-    const res = try {
     const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -784,23 +749,25 @@ async function toggleSum(i) {
         max_tokens: 300,
         messages: [{
           role: 'user',
-          content: 'You are NEWSPACE, a finance news summarizer for Indian students. Write 2-3 sentences: (1) what happened, (2) why it matters for India. Then write exactly "📌 Student takeaway:" followed by the key concept. Under 80 words total.
-
-' + context
+          content: 'Summarize this news for an Indian finance student in 2-3 sentences. Then write exactly: Student takeaway: [one key finance concept]. Keep under 80 words. Article: ' + context
         }]
       })
     });
     const groqData = await groqRes.json();
     if (groqData.choices && groqData.choices[0]) {
       const text = groqData.choices[0].message.content;
-      const parts = text.split('📌');
-      let sumHtml = '<div class="panel-text">' + parts[0].trim() + '</div>';
-      if (parts[1]) sumHtml += '<div class="panel-takeaway"><strong>📌 Student takeaway:</strong> ' + parts[1].replace('Student takeaway:','').trim() + '</div>';
+      const parts = text.split('Student takeaway:');
+      let sumHtml = '<div class="sum-text">' + parts[0].trim() + '</div>';
+      if (parts[1]) {
+        sumHtml += '<div class="sb-tip"><strong>Student takeaway:</strong> ' + parts[1].trim() + '</div>';
+      }
       summaryCache[i] = sumHtml;
-      textEl.innerHTML = sumHtml;
-    } else throw new Error('No response');
+      txt.innerHTML = sumHtml;
+    } else {
+      throw new Error('No response');
+    }
   } catch(e) {
-    textEl.innerHTML = '<div class="panel-text">Could not generate summary. Please try again.</div>';
+    txt.innerHTML = '<div class="sum-text" style="color:var(--ink4)">Could not generate summary. Please try again.</div>';
   }
 }
 window.toggleSum = toggleSum;
@@ -1070,29 +1037,42 @@ function resetProfile() {
 }
 window.resetProfile = resetProfile;
 
-// ── Modal chip toggle ──
-document.querySelectorAll('.interest-chip').forEach(chip => {
-  chip.addEventListener('click', () => {
+// ── Modal chip toggle — use event delegation since modal is after script ──
+function validateModal() {
+  const nameEl = document.getElementById('modal-name');
+  const btnEl = document.getElementById('modal-btn');
+  if (!nameEl || !btnEl) return;
+  const name = nameEl.value.trim();
+  const selected = document.querySelectorAll('.interest-chip.selected').length;
+  btnEl.disabled = !(name.length > 0 && selected > 0);
+}
+window.validateModal = validateModal;
+
+// Use event delegation on document body for chips
+document.body.addEventListener('click', function(e) {
+  const chip = e.target.closest('.interest-chip');
+  if (chip) {
     chip.classList.toggle('selected');
     validateModal();
-  });
+  }
 });
 
-document.getElementById('modal-name').addEventListener('input', validateModal);
-
-function validateModal() {
-  const name = document.getElementById('modal-name').value.trim();
-  const selected = document.querySelectorAll('.interest-chip.selected').length;
-  document.getElementById('modal-btn').disabled = !(name.length > 0 && selected > 0);
-}
+// Use event delegation for name input
+document.body.addEventListener('input', function(e) {
+  if (e.target && e.target.id === 'modal-name') {
+    validateModal();
+  }
+});
 
 // ── Init: show modal or apply saved profile ──
 const savedProfile = loadProfile();
 if (savedProfile) {
-  document.getElementById('modal-overlay').classList.add('hidden');
+  const overlay = document.getElementById('modal-overlay');
+  if (overlay) overlay.classList.add('hidden');
   applyProfile(savedProfile);
 } else {
-  document.getElementById('modal-overlay').classList.remove('hidden');
+  const overlay = document.getElementById('modal-overlay');
+  if (overlay) overlay.classList.remove('hidden');
 }
 
 // ── When news tab opened, load personalized feed ──
