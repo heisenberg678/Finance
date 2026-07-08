@@ -130,8 +130,11 @@ def update_github_site(articles):
             flags=re.DOTALL
         )
         print(f"[DEBUG] New HTML length: {len(html_new)}")
+        if html_new == html:
+            print("[ERROR] Regex did not change anything!")
+            return False
     else:
-        print("[ERROR] Markers not found!")
+        print("[ERROR] Markers not found in HTML!")
         return False
 
     encoded = base64.b64encode(html_new.encode("utf-8")).decode("utf-8")
