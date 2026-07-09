@@ -29,48 +29,100 @@ todays_summaries = []
 def extract_text_from_pdf(pdf_bytes):
     text = ""
     with fitz.open(stream=pdf_bytes, filetype="pdf") as doc:
+        total_pages = len(doc)
+        print(f"[DEBUG] PDF has {total_pages} pages")
         for page in doc:
             text += page.get_text()
+    print(f"[DEBUG] Extracted {len(text):,} characters")
     return text.strip()
 
 
-def summarize_newspaper(text, newspaper_name):
-    short_text = text[:4000]
+def chunk_text(text, chunk_size=4000):
+    """Split text into chunks for processing."""
+    chunks = []
+    words = text.split()
+    current = []
+    current_len = 0
+    for word in words:
+        current.append(word)
+        current_len += len(word) + 1
+        if current_len >= chunk_size:
+            chunks.append(" ".join(current))
+            current = []
+            current_len = 0
+    if current:
+        chunks.append(" ".join(current))
+    return chunks
+
+
+def summarize_chunk(chunk, newspaper_name, chunk_num):
+    """Summarize one chunk of newspaper text."""
     url = "https://api.groq.com/openai/v1/chat/completions"
     headers = {
         "Authorization": f"Bearer {GROQ_API_KEY}",
         "Content-Type": "application/json"
     }
-    prompt = f"""Read this newspaper text and find 5 important finance stories.
-Return ONLY a JSON array with 5 objects. Each object must have:
-- title (max 10 words)
-- category (one of: Indian Finance, Stock Market, Global Markets, World News, Banking)
-- summary (2 sentences max)
-- takeaway (1 sentence finance lesson)
+    prompt = f"""You are a newspaper editor. Read this section of {newspaper_name} and extract ALL news stories you can find.
+For each story return a JSON object with:
+- title (clear headline, max 12 words)
+- category (one of: Indian Finance, Stock Market, Global Markets, World News, Banking, Economy, Politics, Business)
+- summary (2-3 clear sentences explaining what happened)
+- takeaway (1 sentence key insight for a finance student)
 - source (use "{newspaper_name}")
 
-JSON array only. No other text.
+Return ONLY a valid JSON array. No extra text. Include as many stories as you find (aim for 8-12 per section).
 
-TEXT:
-{short_text}"""
+NEWSPAPER TEXT SECTION {chunk_num}:
+{chunk}"""
 
     payload = {
         "model": "llama-3.1-8b-instant",
         "messages": [{"role": "user", "content": prompt}],
-        "max_tokens": 1500,
-        "temperature": 0.3
+        "max_tokens": 3000,
+        "temperature": 0.2
     }
 
     r = requests.post(url, headers=headers, json=payload, timeout=30)
     if r.status_code != 200:
-        raise Exception(f"Groq error {r.status_code}: {r.text[:200]}")
+        print(f"[WARN] Chunk {chunk_num} failed: {r.status_code}")
+        return []
 
     raw = r.json()["choices"][0]["message"]["content"].strip()
     raw = re.sub(r"```json|```", "", raw).strip()
     match = re.search(r'\[.*\]', raw, re.DOTALL)
     if match:
         raw = match.group()
-    return json.loads(raw)[:5]
+    try:
+        return json.loads(raw)
+    except:
+        return []
+
+
+def summarize_newspaper(text, newspaper_name):
+    """Process entire newspaper and return ALL articles."""
+    # Split into chunks of 4000 chars each
+    chunks = chunk_text(text, 4000)
+    print(f"[DEBUG] Processing {len(chunks)} chunks from newspaper")
+
+    all_articles = []
+    # Process up to 8 chunks (covers most newspapers)
+    for i, chunk in enumerate(chunks[:8]):
+        print(f"[DEBUG] Processing chunk {i+1}/{min(len(chunks), 8)}...")
+        articles = summarize_chunk(chunk, newspaper_name, i+1)
+        all_articles.extend(articles)
+        print(f"[DEBUG] Found {len(articles)} articles in chunk {i+1}")
+
+    # Remove duplicates by title
+    seen_titles = set()
+    unique_articles = []
+    for art in all_articles:
+        title = art.get("title", "").lower().strip()
+        if title and title not in seen_titles:
+            seen_titles.add(title)
+            unique_articles.append(art)
+
+    print(f"[DEBUG] Total unique articles: {len(unique_articles)}")
+    return unique_articles
 
 
 def update_github_site(articles):
@@ -206,14 +258,23 @@ async def handle_pdf(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         await msg.edit_text(f"❌ AI failed: {e}")
         return
 
-    reply = f"✅ *Top {len(articles)} stories from {newspaper_name}:*\n\n"
-    for i, art in enumerate(articles, 1):
-        reply += f"*{i}. {art.get('title', '')}*\n"
-        reply += f"_{art.get('summary', '')}_\n"
-        reply += f"📌 _{art.get('takeaway', '')}_\n\n"
-    if len(reply) > 4000:
-        reply = reply[:3990] + "..."
-    await msg.edit_text(reply, parse_mode="Markdown")
+    total = len(articles)
+    # Send summary count first
+    await msg.edit_text(
+        f"✅ *Found {total} articles from {newspaper_name}*\n\n"
+        f"Updating NEWSPACE website with all articles...",
+        parse_mode="Markdown"
+    )
+
+    # Send first 5 as preview in Telegram (Telegram has message limits)
+    preview = f"📰 *Preview — First 5 of {total} articles:*\n\n"
+    for i, art in enumerate(articles[:5], 1):
+        preview += f"*{i}. {art.get('title', '')}*\n"
+        preview += f"_{art.get('summary', '')}_\n"
+        preview += f"📌 _{art.get('takeaway', '')}_\n\n"
+    if len(preview) > 4000:
+        preview = preview[:3990] + "..."
+    await update.message.reply_text(preview, parse_mode="Markdown")
 
     m2 = await update.message.reply_text("🌐 Updating NEWSPACE website...")
     success = update_github_site(todays_summaries)
