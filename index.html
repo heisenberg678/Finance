@@ -423,7 +423,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
 <!-- NEWS FEED -->
 <div id="page-news" class="page">
   <div class="section">
-    <div class="news-pills" id="news-pills">
+    <div class="news-pills" id="news-pills" style="display:none">
       <div class="npill active" data-q="india finance economy RBI SEBI">All Finance</div>
       <div class="npill" data-q="india economy RBI rupee fiscal budget">Indian Economy</div>
       <div class="npill" data-q="sensex nifty stock market BSE NSE IPO shares">Stock Market</div>
@@ -431,15 +431,19 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
       <div class="npill" data-q="world trade geopolitics oil commodity">World News</div>
     </div>
     <!-- NEWSPAPER SUMMARIES -->
+    <div style="background:linear-gradient(135deg,#0f172a,#1e3a5f);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#94a3b8;margin-bottom:4px;">How it works</div>
+        <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:3px;">Forward newspaper PDFs to @Sarthnews_Bot</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.45);">Bot summarizes top 5 stories and updates this page automatically</div>
+      </div>
+      <a href="https://t.me/Sarthnews_Bot" target="_blank" style="background:rgba(255,255,255,0.1);color:#fff;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;flex-shrink:0;">Open Bot →</a>
+    </div>
     <div id="bot-articles-wrapper">
       <!-- AUTO:BOT_ARTICLES_START -->
       <!-- AUTO:BOT_ARTICLES_END -->
     </div>
-    <div style="display:flex;align-items:center;gap:10px;margin:1rem 0;">
-      <div style="flex:1;height:1px;background:var(--border)"></div>
-      <span style="font-size:11px;font-weight:600;color:var(--ink4);letter-spacing:.5px;text-transform:uppercase;">Live from web</span>
-      <div style="flex:1;height:1px;background:var(--border)"></div>
-    </div>
+
     <div id="news-feed"><div class="feed-loading"><div class="spinner"></div>Fetching today's headlines...</div></div>
   </div>
 </div>
@@ -615,80 +619,19 @@ function getCategory(a) {
 }
 
 async function fetchNews(q) {
-  const feed = document.getElementById('news-feed');
-  feed.innerHTML = '<div class="feed-loading"><div class="spinner"></div>Fetching live headlines...</div>';
-  summaryCache = {};
-  feedArticles = [];
-
-  // Strategy 1: NewsAPI via CORS proxies
-  const newsUrl = 'https://newsapi.org/v2/everything?q=' + encodeURIComponent(q) + '&language=en&sortBy=publishedAt&pageSize=12&apiKey=' + NEWS_KEY;
-  const proxies = [
-    'https://corsproxy.io/?' + encodeURIComponent(newsUrl),
-    'https://api.allorigins.win/raw?url=' + encodeURIComponent(newsUrl),
-    'https://thingproxy.freeboard.io/fetch/' + newsUrl,
-  ];
-
-  for (let i = 0; i < proxies.length; i++) {
-    try {
-      const r = await Promise.race([
-        fetch(proxies[i]),
-        new Promise((_,rej) => setTimeout(() => rej('timeout'), 7000))
-      ]);
-      if (!r.ok) continue;
-      const text = await r.text();
-      let d;
-      try { d = JSON.parse(text); } catch(e) { continue; }
-      if (!d.articles || d.articles.length === 0) continue;
-      const filtered = d.articles.filter(function(a) {
-        return a.title && a.title !== '[Removed]' && a.url;
-      }).slice(0, 10);
-      if (filtered.length === 0) continue;
-      feedArticles = filtered;
-      renderFeed(feedArticles);
-      return;
-    } catch(e) { continue; }
+  var feed = document.getElementById('news-feed');
+  var botWrapper = document.getElementById('bot-articles-wrapper');
+  var hasBotArticles = botWrapper && botWrapper.innerHTML.trim().length > 100;
+  if (!hasBotArticles) {
+    feed.innerHTML = '<div style="text-align:center;padding:3rem 1rem;">' +
+      '<div style="font-size:40px;margin-bottom:1rem;">📰</div>' +
+      '<div style="font-family:Fraunces,serif;font-size:18px;font-weight:700;color:var(--ink);margin-bottom:8px;">No articles yet today</div>' +
+      '<div style="font-size:13px;color:var(--ink3);line-height:1.7;max-width:360px;margin:0 auto;">' +
+      'Forward a newspaper PDF to @Sarthnews_Bot on Telegram and articles appear here in 60 seconds.' +
+      '</div>' +
+      '<div style="margin-top:1.5rem;padding:10px 16px;background:var(--accent-bg);border-radius:8px;font-size:12px;color:var(--accent);font-weight:600;display:inline-block;">📲 @Sarthnews_Bot</div>' +
+      '</div>';
   }
-
-  // Strategy 2: RSS via rss2json (free, no CORS)
-  try {
-    const rssFeeds = {
-      'india finance economy RBI SEBI': 'https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms',
-      'sensex nifty stock market BSE NSE IPO shares': 'https://economictimes.indiatimes.com/markets/stocks/rssfeeds/2146842.cms',
-      'federal reserve global markets dollar bonds wall street': 'https://feeds.bloomberg.com/markets/news.rss',
-      'world trade geopolitics oil commodity': 'https://feeds.reuters.com/reuters/businessNews',
-      'india economy RBI rupee fiscal budget': 'https://www.thehindu.com/business/feeder/default.rss',
-    };
-    const rssUrl = rssFeeds[q] || 'https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms';
-    const apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(rssUrl) + '&api_key=free&count=10';
-    const r = await Promise.race([
-      fetch(apiUrl),
-      new Promise((_,rej) => setTimeout(() => rej('timeout'), 7000))
-    ]);
-    if (r.ok) {
-      const d = await r.json();
-      if (d.items && d.items.length > 0) {
-        feedArticles = d.items.map(function(item) {
-          return {
-            title: item.title,
-            description: item.description ? item.description.replace(/<[^>]+>/g,'').substring(0,200) : '',
-            url: item.link,
-            publishedAt: item.pubDate,
-            source: { name: d.feed ? d.feed.title : 'Economic Times' }
-          };
-        }).filter(function(a) { return a.title && a.url; }).slice(0,10);
-        if (feedArticles.length > 0) {
-          renderFeed(feedArticles);
-          return;
-        }
-      }
-    }
-  } catch(e) {}
-
-  // Final fallback: demo articles
-  feedArticles = DEMO_ARTICLES;
-  renderFeed(DEMO_ARTICLES);
-  feed.insertAdjacentHTML('afterbegin',
-    '<div style="background:#fef9c3;border:1px solid #fde68a;border-radius:var(--radius-sm);padding:10px 14px;font-size:12px;color:var(--ink2);margin-bottom:12px;">Showing sample articles. For live news, the site needs to be hosted on Netlify.</div>');
 }
 
 function renderFeed(articles) {
