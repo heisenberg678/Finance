@@ -441,8 +441,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
     </div>
     <div id="bot-articles-wrapper">
       <!-- AUTO:BOT_ARTICLES_START -->
-<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 14px;font-size:12px;color:#166534;margin-bottom:12px;">✅ Live from newspaper · 09 Jul 2026, 01:28 PM IST</div>
-<!-- AUTO:BOT_ARTICLES_END -->
+      <!-- AUTO:BOT_ARTICLES_END -->
     </div>
 
     <div id="news-feed"><div class="feed-loading"><div class="spinner"></div>Fetching today's headlines...</div></div>
@@ -564,6 +563,45 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
 
 <script>
 // ── Wait for DOM ──
+// ── GLOBAL FUNCTIONS ──
+function resetProfile() {
+  localStorage.removeItem(PROFILE_KEY);
+  location.reload();
+}
+window.resetProfile
+
+function saveProfile() {
+  const name = document.getElementById('modal-name').value.trim();
+  const chips = document.querySelectorAll('.interest-chip.selected');
+  if (!name || chips.length === 0) return;
+
+  const interests = Array.from(chips).map(c => ({
+    topic: c.dataset.topic,
+    label: c.dataset.label
+  }));
+
+  const profile = { name, interests };
+  localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+  document.getElementById('modal-overlay').classList.add('hidden');
+  applyProfile(profile);
+
+  // Auto-load news based on interests
+  const combinedQuery = interests.map(i => i.topic).join(' ');
+  if (document.getElementById('page-news').classList.contains('active')) {
+    fetchNews(combinedQuery);
+  }
+}
+window.saveProfile
+
+function toggleChip(el) {
+  if (el) el.classList.toggle('selected');
+  var nameEl = document.getElementById('modal-name');
+  var name = nameEl ? nameEl.value.trim() : '';
+  var selected = document.querySelectorAll('.interest-chip.selected').length;
+  var btn = document.getElementById('modal-btn');
+  if (btn) btn.disabled = !(name.length > 0 && selected > 0);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
 
 const NEWS_KEY = '62f70f53506c4108959cdf7ec09eb032';
@@ -904,37 +942,9 @@ function loadProfile() {
   catch(e) { return null; }
 }
 
-function toggleChip(el) {
-  if (el) el.classList.toggle('selected');
-  var name = document.getElementById('modal-name').value.trim();
-  var selected = document.querySelectorAll('.interest-chip.selected').length;
-  var btn = document.getElementById('modal-btn');
-  if (btn) btn.disabled = !(name.length > 0 && selected > 0);
-}
-window.toggleChip = toggleChip;
+// toggleChip moved to global scope
 
-function saveProfile() {
-  const name = document.getElementById('modal-name').value.trim();
-  const chips = document.querySelectorAll('.interest-chip.selected');
-  if (!name || chips.length === 0) return;
-
-  const interests = Array.from(chips).map(c => ({
-    topic: c.dataset.topic,
-    label: c.dataset.label
-  }));
-
-  const profile = { name, interests };
-  localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
-  document.getElementById('modal-overlay').classList.add('hidden');
-  applyProfile(profile);
-
-  // Auto-load news based on interests
-  const combinedQuery = interests.map(i => i.topic).join(' ');
-  if (document.getElementById('page-news').classList.contains('active')) {
-    fetchNews(combinedQuery);
-  }
-}
-window.saveProfile = saveProfile;
+// saveProfile moved to global scope = saveProfile;
 
 function applyProfile(profile) {
   if (!profile) return;
@@ -984,11 +994,7 @@ function applyProfile(profile) {
   if (firstPill) firstPill.classList.add('active');
 }
 
-function resetProfile() {
-  localStorage.removeItem(PROFILE_KEY);
-  location.reload();
-}
-window.resetProfile = resetProfile;
+// resetProfile moved to global scope = resetProfile;
 
 // ── Modal chip toggle — use event delegation since modal is after script ──
 function validateModal() {
