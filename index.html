@@ -33,7 +33,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);font-s
 .interest-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.5rem}
 .interest-chip{padding:9px 12px;border:1.5px solid var(--border2);border-radius:var(--radius-sm);font-size:13px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all .12s;display:flex;align-items:center;gap:7px;user-select:none}
 .interest-chip:hover{border-color:var(--accent);color:var(--accent)}
-.interest-chip.selected{border-color:var(--accent);background:var(--accent-bg);color:var(--accent);font-weight:600}
+.interest-chip.selected,.interest-chip:has(input:checked){border-color:var(--accent);background:var(--accent-bg);color:var(--accent);font-weight:600}
 .interest-chip .chip-icon{font-size:16px;line-height:1}
 .modal-btn{width:100%;padding:11px;background:var(--ink);color:#fff;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .15s}
 .modal-btn:hover{opacity:.85}
@@ -441,38 +441,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
     </div>
     <div id="bot-articles-wrapper">
       <!-- AUTO:BOT_ARTICLES_START -->
-<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 14px;font-size:12px;color:#166534;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;"><span>✅ 5 articles from newspaper · 10 Jul 2026, 12:42 PM IST</span></div>
-<div class="ncard featured">
-<div class="nc-meta"><span class="tag" style="background:#dbeafe;color:#1d4ed8">Indian Finance</span><span class="nc-source">Bl   Mumbai    10 07 2026 Tr</span><span class="nc-sep">·</span><span class="nc-time">Today</span></div>
-<div class="nc-title">SBI MF IPO priced at ₹545-574 per share</div>
-<div class="nc-desc">SBI Funds Management, the country's largest mutual fund house, has priced its initial public offering at ₹545-₹574 per equity share of face value ₹1 each. The promoters of the fund house, SBI and European fund management company Amundi India Holdings, will offload 12.83 crore shares and 7.54 crore shares to collectively raise ₹11,692 crore.</div>
-<div style="margin-top:8px;padding:8px 10px;background:#eff6ff;border-radius:6px;font-size:12px;color:#1d4ed8;">📌 Key lesson for finance students: IPO pricing is a critical aspect of initial public offerings, and it can impact the fund's ability to raise capital.</div>
-</div>
-<div class="ncard ">
-<div class="nc-meta"><span class="tag" style="background:#dbeafe;color:#1d4ed8">Indian Finance</span><span class="nc-source">Bl   Mumbai    10 07 2026 Tr</span><span class="nc-sep">·</span><span class="nc-time">Today</span></div>
-<div class="nc-title">TCS reports 4.7% growth in net profit for Q1 FY27</div>
-<div class="nc-desc">Tata Consultancy Services (TCS) reported a 4.7% growth in net profit to ₹13,420 crore for the first quarter of FY27, led by positive annual growth across most verticals and AI transformation-focused deals. The net profit declined 2.6% on a sequential basis due to exceptional costs.</div>
-<div style="margin-top:8px;padding:8px 10px;background:#eff6ff;border-radius:6px;font-size:12px;color:#1d4ed8;">📌 Key lesson for finance students: Companies can experience fluctuations in net profit due to various factors, including exceptional costs and changes in market conditions.</div>
-</div>
-<div class="ncard ">
-<div class="nc-meta"><span class="tag" style="background:#dbeafe;color:#1d4ed8">Indian Finance</span><span class="nc-source">Bl   Mumbai    10 07 2026 Tr</span><span class="nc-sep">·</span><span class="nc-time">Today</span></div>
-<div class="nc-title">TCS sees strong growth in AI revenue</div>
-<div class="nc-desc">TCS reported a 14% growth in revenue to ₹72,275 crore annually, led by growth across most segments. The annualised AI revenue run rate stood at $2.6 billion, a sequential increase of 13.6%.</div>
-<div style="margin-top:8px;padding:8px 10px;background:#eff6ff;border-radius:6px;font-size:12px;color:#1d4ed8;">📌 Key lesson for finance students: Companies can experience growth in specific areas, such as AI revenue, due to increasing demand and technological advancements.</div>
-</div>
-<div class="ncard ">
-<div class="nc-meta"><span class="tag" style="background:#fef9c3;color:#a16207">World News</span><span class="nc-source">Bl   Mumbai    10 07 2026 Tr</span><span class="nc-sep">·</span><span class="nc-time">Today</span></div>
-<div class="nc-title">Govt awaiting Meta’s reply over child sexual exploitative materials in paid ads on Instagram</div>
-<div class="nc-desc">The government is awaiting Meta's reply over child sexual exploitative materials in paid ads on Instagram. The government has taken a stern view on the issue and is seeking a response from the company.</div>
-<div style="margin-top:8px;padding:8px 10px;background:#eff6ff;border-radius:6px;font-size:12px;color:#1d4ed8;">📌 Key lesson for finance students: Companies must adhere to regulatory requirements and ensure that their advertising practices do not promote or facilitate illegal activities.</div>
-</div>
-<div class="ncard ">
-<div class="nc-meta"><span class="tag" style="background:#fef9c3;color:#a16207">World News</span><span class="nc-source">Bl   Mumbai    10 07 2026 Tr</span><span class="nc-sep">·</span><span class="nc-time">Today</span></div>
-<div class="nc-title">June was the second warmest on record, with ocean temperatures at an all-time high</div>
-<div class="nc-desc">June was the second warmest on record, with ocean temperatures at an all-time high, according to C3S. The data highlights the impact of climate change on global temperatures.</div>
-<div style="margin-top:8px;padding:8px 10px;background:#eff6ff;border-radius:6px;font-size:12px;color:#1d4ed8;">📌 Key lesson for finance students: Climate change can have significant economic and social implications, and companies must consider these factors when making investment decisions.</div>
-</div>
-<!-- AUTO:BOT_ARTICLES_END -->
+      <!-- AUTO:BOT_ARTICLES_END -->
     </div>
 
     <div id="news-feed"><div class="feed-loading"><div class="spinner"></div>Fetching today's headlines...</div></div>
@@ -595,6 +564,13 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,250,249,0.96);backdrop
 <script>
 // ── Wait for DOM ──
 // ── GLOBAL FUNCTIONS ──
+function checkModal() {
+  var name = document.getElementById("modal-name");
+  var btn = document.getElementById("modal-btn");
+  if (!name || !btn) return;
+  var checked = document.querySelectorAll("#interest-grid input:checked").length;
+  btn.disabled = !(name.value.trim().length > 0 && checked > 0);
+}
 function resetProfile() {
   localStorage.removeItem(PROFILE_KEY);
   location.reload();
@@ -602,35 +578,29 @@ function resetProfile() {
 window.resetProfile
 
 function saveProfile() {
-  const name = document.getElementById('modal-name').value.trim();
-  const chips = document.querySelectorAll('.interest-chip.selected');
-  if (!name || chips.length === 0) return;
+  var name = document.getElementById("modal-name").value.trim();
+  var checkboxes = document.querySelectorAll("#interest-grid input:checked");
+  if (!name || checkboxes.length === 0) return;
 
-  const interests = Array.from(chips).map(c => ({
-    topic: c.dataset.topic,
-    label: c.dataset.label
-  }));
+  var interests = Array.from(checkboxes).map(function(cb) {
+    return { topic: cb.value, label: cb.dataset.label };
+  });
 
-  const profile = { name, interests };
-  localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
-  document.getElementById('modal-overlay').classList.add('hidden');
+  var profile = { name: name, interests: interests };
+  localStorage.setItem("ns_profile", JSON.stringify(profile));
+  document.getElementById("modal-overlay").classList.add("hidden");
   applyProfile(profile);
 
-  // Auto-load news based on interests
-  const combinedQuery = interests.map(i => i.topic).join(' ');
-  if (document.getElementById('page-news').classList.contains('active')) {
+  var combinedQuery = interests.map(function(i) { return i.topic; }).join(" ");
+  if (document.getElementById("page-news").classList.contains("active")) {
     fetchNews(combinedQuery);
   }
 }
 window.saveProfile
 
 function toggleChip(el) {
-  if (el) el.classList.toggle('selected');
-  var nameEl = document.getElementById('modal-name');
-  var name = nameEl ? nameEl.value.trim() : '';
-  var selected = document.querySelectorAll('.interest-chip.selected').length;
-  var btn = document.getElementById('modal-btn');
-  if (btn) btn.disabled = !(name.length > 0 && selected > 0);
+  // handled by checkboxes now - just validate
+  checkModal();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -1253,18 +1223,18 @@ setInterval(refreshLive, 15000);
     <div class="modal-sub">Personalise your experience in 30 seconds</div>
 
     <div class="modal-label">What is your name?</div>
-    <input class="modal-input" id="modal-name" type="text" oninput="toggleChip(null)" placeholder="e.g. Sarthak" maxlength="30" />
+    <input class="modal-input" id="modal-name" type="text" placeholder="e.g. Sarthak" oninput="checkModal()" maxlength="30" />
 
     <div class="modal-label">What topics interest you? (pick at least one)</div>
-    <div class="interest-grid">
-      <div class="interest-chip" data-topic="india finance economy RBI SEBI" data-label="Indian Economy" onclick="toggleChip(this)"><span class="chip-icon">🇮🇳</span>Indian Economy</div>
-      <div class="interest-chip" data-topic="sensex nifty stock market BSE NSE IPO" data-label="Stock Market" onclick="toggleChip(this)"><span class="chip-icon">📈</span>Stock Market</div>
-      <div class="interest-chip" data-topic="federal reserve global markets dollar bonds" data-label="Global Markets" onclick="toggleChip(this)"><span class="chip-icon">🌐</span>Global Markets</div>
-      <div class="interest-chip" data-topic="RBI banking NBFC credit NPA loans" data-label="Banking" onclick="toggleChip(this)"><span class="chip-icon">🏦</span>Banking</div>
-      <div class="interest-chip" data-topic="startup venture capital funding IPO tech" data-label="Startups & VC" onclick="toggleChip(this)"><span class="chip-icon">🚀</span>Startups & VC</div>
-      <div class="interest-chip" data-topic="oil commodity gold crude inflation" data-label="Commodities" onclick="toggleChip(this)"><span class="chip-icon">🛢️</span>Commodities</div>
-      <div class="interest-chip" data-topic="world trade geopolitics war sanctions" data-label="World News" onclick="toggleChip(this)"><span class="chip-icon">🗞️</span>World News</div>
-      <div class="interest-chip" data-topic="cryptocurrency bitcoin ethereum blockchain" data-label="Crypto" onclick="toggleChip(this)"><span class="chip-icon">₿</span>Crypto</div>
+    <div class="interest-grid" id="interest-grid">
+      <label class="interest-chip"><input type="checkbox" onchange="checkModal()" value="india finance economy RBI SEBI" data-label="Indian Economy" style="display:none"><span class="chip-icon">🇮🇳</span>Indian Economy</label>
+      <label class="interest-chip"><input type="checkbox" onchange="checkModal()" value="sensex nifty stock market BSE NSE IPO" data-label="Stock Market" style="display:none"><span class="chip-icon">📈</span>Stock Market</label>
+      <label class="interest-chip"><input type="checkbox" onchange="checkModal()" value="federal reserve global markets dollar bonds" data-label="Global Markets" style="display:none"><span class="chip-icon">🌐</span>Global Markets</label>
+      <label class="interest-chip"><input type="checkbox" onchange="checkModal()" value="RBI banking NBFC credit NPA loans" data-label="Banking" style="display:none"><span class="chip-icon">🏦</span>Banking</label>
+      <label class="interest-chip"><input type="checkbox" onchange="checkModal()" value="startup venture capital funding IPO tech" data-label="Startups & VC" style="display:none"><span class="chip-icon">🚀</span>Startups & VC</label>
+      <label class="interest-chip"><input type="checkbox" onchange="checkModal()" value="oil commodity gold crude inflation" data-label="Commodities" style="display:none"><span class="chip-icon">🛢️</span>Commodities</label>
+      <label class="interest-chip"><input type="checkbox" onchange="checkModal()" value="world trade geopolitics war sanctions" data-label="World News" style="display:none"><span class="chip-icon">🗞️</span>World News</label>
+      <label class="interest-chip"><input type="checkbox" onchange="checkModal()" value="cryptocurrency bitcoin ethereum blockchain" data-label="Crypto" style="display:none"><span class="chip-icon">₿</span>Crypto</label>
     </div>
 
     <button class="modal-btn" id="modal-btn" disabled onclick="saveProfile()">Get Started →</button>
